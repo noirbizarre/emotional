@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@main
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pdm sync -d -G test
+
+      - name: Run Tests
+        run: pdm run cover -v --force-sugar --color=yes
+
+      - name: Upload coverage report to Codecov
+        uses: paambaati/codeclimate-action@v3.1.0
+        env:
+          CC_TEST_REPORTER_ID: f198cfa292b0eb868dfa4f6e998b5a2fe22aa24acd16d72ca2bdbafde16b66b8
+        with:
+          coverageLocations: reports/coverage.xml:coverage.py

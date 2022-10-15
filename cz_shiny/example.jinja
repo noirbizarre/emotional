@@ -1,0 +1,26 @@
+# Short
+fix: fix something (present or imperative, no period)
+{% if config.github or config.jira_url %}
+fix(package): fix something{% if config.github %} #42{% endif %}{% if config.jira_url %} PRJ-42{% endif %}
+{% endif +%}
+feat(name): add a new feature
+refactor(package)!: this refactoring break the thing
+
+# Full
+feat(something): add something new (present/imperative, no period)
+
+Here optionnaly comes the details.
+It can be multines.
+
+BREAKING CHANGE: It breaks something !
+This optional and can be multilines too.
+
+{% if config.github %}
+Fix #42
+{% endif %}
+{% if config.jira_url %}
+Jira: PRJ-42
+PRJ-4912 #smart command
+{% endif %}
+Ref: 329cc6c8
+Signed-By: user@company.com

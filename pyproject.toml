@@ -1,0 +1,173 @@
+[project]
+name = "cz-shiny"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Axel H.", email = "noirbizarre@gmail.com"},
+]
+dependencies = [
+    "commitizen>=2.33.1",
+]
+requires-python = ">=3.7"
+readme = "README.md"
+license = {text = "MIT"}
+[project.optional-dependencies]
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
+
+[tool.pdm.version]
+source = "scm"
+write_to = "cz_shiny/_version.py"
+write_template = '__version__ = "{}"'
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.1.2",
+    "pytest-sugar>=0.9.5",
+    "pytest-cov>=3.0.0",
+    # "pytest-mock>=3.8.2",
+]
+lint = [
+    "black>=22.6.0",
+    "isort>=5.10.1",
+    "mypy>=0.971",
+    "absolufy-imports>=0.3.1",
+    "flakeheaven>=3.0.0",
+]
+
+[tool.pdm.scripts]
+test.help = "Run the test suite"
+test.cmd = "pytest"
+
+lint.help = "Lint all tracked files using pre-commit"
+lint.cmd = "pre-commit run --all-files"
+
+cover.help = "Run the test suite with coverage"
+pre_cover = "coverage erase"
+cover.composite = [
+  """
+  test
+    --cov-report=term
+    --cov=cz_shiny
+    --cov-report=html:reports/coverage
+    --cov-report=xml:reports/coverage.xml
+    --no-cov-on-fail
+    --junitxml=reports/tests.xml
+  """
+]
+
+"cover:tox".help = "Run the test suite against all supported Python version"
+"cover:tox".composite = [
+  "echo '🚦 Tests'",
+  "coverage erase",
+  "tox -p",
+  "echo '\n📸 Coverage'",
+  "coverage report",
+  "coverage xml -o reports/tox/coverage.xml",
+  "coverage html -d reports/tox/coverage",
+]
+
+check.help = "Check everything"
+check.composite = [
+  "cover:tox",
+  "echo '\n🎨 Style'",
+  "lint",
+]
+
+
+[tool.commitizen]
+name = "cz_shiny"
+github = "noirbizarre/cz-shiny"
+
+
+[tool.pdm.vscode]
+linters = ["flakeheaven"]
+formatter = "black"
+
+
+[tool.black]
+line-length = 100
+exclude = '''
+/(
+    \.git
+  | \.github
+  | \.mypy_cache
+  | \.pytest_cache
+  | \.tox
+  | \.venv
+  | __pycache__
+  | __pypackages__
+  | build
+  | dist
+  | reports
+)/
+'''
+
+[tool.flakeheaven]
+format = "grouped"
+max_line_length = 110
+exclude = [
+  ".git",
+  ".github",
+  ".mypy_cache",
+  ".pytest_cache",
+  ".tox",
+  ".venv",
+  "__pycache__",
+  "__pypackages__",
+  "build",
+  "dist",
+  "reports",
+]
+[tool.flakeheaven.plugins]
+pycodestyle = ["+*", "-E203"]
+pyflakes = ["+*"]
+mccabe = ["+*"]
+
+
+[tool.isort]
+# See: https://pycqa.github.io/isort/docs/configuration/black_compatibility/
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+line_length = 110
+atomic = true
+filter_files = true
+sections = [
+  "FUTURE",
+  "STDLIB",
+  "THIRDPARTY",
+  "TESTLIBS",
+  "FIRSTPARTY",
+  "TESTHELPERS",
+  "LOCALFOLDER",
+]
+known_first_party = ["cz_shiny"]
+known_third_party = ["commitizen"]
+known_test_libs = ["pytest"]
+known_test_helpers = ["test"]
+
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+norecursedirs = ".git build dist"
+testpaths = [
+  "cz_shiny/",
+  "tests/",
+]
+markers = [
+  "settings: Provide kay-value commitizen/shiny settings pair",
+]
+
+
+[tool.coverage.run]
+source = ["cz_shiny"]
+branch = true
+omit = [
+  "tests/*",
+]

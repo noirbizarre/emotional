@@ -50,6 +50,8 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+reports/
+.benchmarks/
 
 # Translations
 *.mo
@@ -93,6 +95,9 @@ ipython_config.py
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
+
+# PDM
+.pdm.toml
 
 # Celery stuff
 celerybeat-schedule

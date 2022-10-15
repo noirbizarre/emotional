@@ -8,7 +8,7 @@ from commitizen.cz.utils import multiple_line_breaker, required_validator
 from commitizen.git import GitCommit
 
 from . import github, gitlab, jira
-from .config import CommitType, ShinyConfig
+from .config import CommitType, EmotionalConfig
 from .utils import render_template
 
 INTEGRATIONS = github, gitlab, jira
@@ -48,10 +48,10 @@ def parse_subject(text):
     return required_validator(text, msg="Subject is required.")
 
 
-class CzShiny(BaseCommitizen):
+class CzEmotional(BaseCommitizen):
     def __init__(self, config: BaseConfig):
         super().__init__(config)
-        self.shiny_config = ShinyConfig(config.settings)
+        self.emotional_config = EmotionalConfig(config.settings)
 
     def questions(self) -> list:
         questions: list[dict[str, Any]] = [
@@ -61,7 +61,7 @@ class CzShiny(BaseCommitizen):
                 "message": "Select the type of change you are committing",
                 "choices": [
                     {"value": t.type, "name": f"{t.emoji} {t.type}: {t.description}", "key": t.shortcut}
-                    for t in self.shiny_config.known_types
+                    for t in self.emotional_config.known_types
                 ],
             },
             {
@@ -115,7 +115,7 @@ class CzShiny(BaseCommitizen):
         ]
         for integration in INTEGRATIONS:
             if hasattr(integration, "questions"):
-                questions = integration.questions(self.shiny_config, questions)
+                questions = integration.questions(self.emotional_config, questions)
         return questions
 
     def message(self, answers: dict) -> str:
@@ -153,7 +153,7 @@ class CzShiny(BaseCommitizen):
         for integration in INTEGRATIONS:
             if hasattr(integration, "changelog_message_hook"):
                 parsed_message = integration.changelog_message_hook(
-                    self.shiny_config, parsed_message, commit
+                    self.emotional_config, parsed_message, commit
                 )
         return parsed_message
 
@@ -161,7 +161,7 @@ class CzShiny(BaseCommitizen):
     def change_type_order(self) -> list[str]:
         return [
             type
-            for type in self.shiny_config.known_types
+            for type in self.emotional_config.known_types
             if type.changelog and type.heading
         ]
 
@@ -169,10 +169,10 @@ class CzShiny(BaseCommitizen):
     def changelog_pattern(self) -> str:
         types = "|".join(
             itertools.chain(
-                (t.type for t in self.shiny_config.known_types if t.changelog),
+                (t.type for t in self.emotional_config.known_types if t.changelog),
                 (
                     alias
-                    for t in self.shiny_config.known_types
+                    for t in self.emotional_config.known_types
                     for alias in t.aliases
                     if t.changelog and t.aliases
                 )
@@ -184,10 +184,10 @@ class CzShiny(BaseCommitizen):
     def commit_parser(self) -> str:
         types = "|".join(
             itertools.chain(
-                (t.type for t in self.shiny_config.known_types if t.changelog),
+                (t.type for t in self.emotional_config.known_types if t.changelog),
                 (
                     alias
-                    for t in self.shiny_config.known_types
+                    for t in self.emotional_config.known_types
                     for alias in t.aliases
                     if t.changelog and t.aliases
                 )
@@ -205,13 +205,13 @@ class CzShiny(BaseCommitizen):
 
     @property
     def change_type_map(self) -> dict[str, CommitType]:
-        return {t.type: t for t in self.shiny_config.known_types}
+        return {t.type: t for t in self.emotional_config.known_types}
 
     def info(self) -> str:
-        return render_template("info.md.jinja", config=self.shiny_config)
+        return render_template("info.md.jinja", config=self.emotional_config)
 
     def example(self) -> str:
-        return render_template("example.jinja", config=self.shiny_config)
+        return render_template("example.jinja", config=self.emotional_config)
 
 
     def schema(self) -> str:

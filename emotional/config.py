@@ -80,7 +80,7 @@ class CommitType:
         return [cls.from_dict(d) for d in lst]
 
 
-class ShinySettings(Settings):
+class EmotionalSettings(Settings):
     types: list[dict] | None
     """The list of accepted types"""
 
@@ -104,8 +104,8 @@ class ShinySettings(Settings):
 
 
 @dataclass
-class ShinyConfig:
-    settings: ShinySettings = field(default_factory=lambda: read_cfg().settings)
+class EmotionalConfig:
+    settings: EmotionalSettings = field(default_factory=lambda: read_cfg().settings)
 
     @property
     def types(self) -> list[CommitType]:

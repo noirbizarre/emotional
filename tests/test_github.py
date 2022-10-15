@@ -4,13 +4,13 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from cz_shiny import github
+from emotional import github
 
 if TYPE_CHECKING:
     from tests.conftest import Factory
 
 
-REPOSITORY = "shiny/test"
+REPOSITORY = "emotional/test"
 
 pytestmark = [pytest.mark.settings(github=REPOSITORY)]
 

@@ -8,12 +8,12 @@ import pytest
 from commitizen.git import GitCommit
 from commitizen.config import BaseConfig
 
-from cz_shiny.config import ShinyConfig, ShinySettings
+from emotional.config import EmotionalConfig, EmotionalSettings
 
 
 @dataclass
 class Factory:
-    config: ShinyConfig
+    config: EmotionalConfig
 
     def parsed_message(self, **kwargs) -> tuple[dict, GitCommit]:
         parsed = {"type": "chore", "scope": None, "message": "I am a message", **kwargs}
@@ -30,8 +30,8 @@ class Factory:
 
 
 @pytest.fixture
-def settings(request) -> ShinySettings:
-    settings = ShinySettings()
+def settings(request) -> EmotionalSettings:
+    settings = EmotionalSettings()
     for marker in reversed(list(request.node.iter_markers("settings"))):
         settings.update(marker.kwargs)
     return settings
@@ -39,7 +39,7 @@ def settings(request) -> ShinySettings:
 @pytest.fixture
 def config(settings):
     config = BaseConfig()
-    # config.settings.update({"name": "cz_shiny"})
+    # config.settings.update({"name": "emotional"})
     config.settings.update(settings)
     # for marker in request.node.iter_markers("settings"):
     #     config.settings.update(marker.kwargs)
@@ -47,10 +47,10 @@ def config(settings):
 
 
 @pytest.fixture
-def shiny_config(settings) -> ShinyConfig:
-    return ShinyConfig(settings)
+def shiny_config(settings) -> EmotionalConfig:
+    return EmotionalConfig(settings)
 
 
 @pytest.fixture
-def factory(shiny_config: ShinyConfig) -> Factory:
+def factory(shiny_config: EmotionalConfig) -> Factory:
     return Factory(shiny_config)

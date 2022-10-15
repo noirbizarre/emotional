@@ -9,7 +9,7 @@ import re
 
 from commitizen.git import GitCommit
 
-from .config import ShinyConfig
+from .config import EmotionalConfig
 
 RE_ISSUE = re.compile(r"(?P<repository>(?P<owner>\w+)/(?P<project>\w+))?#(?P<issue>\d+)")
 
@@ -29,7 +29,7 @@ RE_CLOSING_PATTERN = (
 )
 
 
-def changelog_message_hook(config: ShinyConfig, parsed_message: dict, commit: GitCommit) -> dict:
+def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit: GitCommit) -> dict:
     if config.gitlab is None:
         return parsed_message
 

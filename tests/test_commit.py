@@ -1,7 +1,7 @@
 import pytest
 
 from commitizen.cz.exceptions import AnswerRequiredError
-from cz_shiny.cz import CzShiny, parse_scope, parse_subject
+from emotional.cz import CzEmotional, parse_scope, parse_subject
 
 
 valid_scopes = ["", "simple", "dash-separated", "camelCase" "UPPERCASE"]
@@ -44,15 +44,15 @@ def test_subject_transformations():
 
 
 def test_questions(config):
-    shiny = CzShiny(config)
-    questions = shiny.questions()
+    emotional = CzEmotional(config)
+    questions = emotional.questions()
     assert isinstance(questions, list)
     assert isinstance(questions[0], dict)
 
 
 def test_choices_all_have_keyboard_shortcuts(config):
-    shiny = CzShiny(config)
-    questions = shiny.questions()
+    emotional = CzEmotional(config)
+    questions = emotional.questions()
 
     list_questions = (q for q in questions if q["type"] == "list")
     for select in list_questions:
@@ -60,7 +60,7 @@ def test_choices_all_have_keyboard_shortcuts(config):
 
 
 def test_small_answer(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -69,11 +69,11 @@ def test_small_answer(config):
         "body": "",
         "footer": "",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == "fix(users): email pattern corrected"
 
 def test_no_scope(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "",
@@ -82,12 +82,12 @@ def test_no_scope(config):
         "body": "",
         "footer": "",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == "fix: email pattern corrected"
 
 
 def test_long_answer(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -96,7 +96,7 @@ def test_long_answer(config):
         "body": "complete content",
         "footer": "closes #24",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == (
         "fix(users): email pattern corrected\n"
         "\n"
@@ -107,7 +107,7 @@ def test_long_answer(config):
 
 
 def test_breaking_change_in_footer(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -117,7 +117,7 @@ def test_breaking_change_in_footer(config):
         "breaking_change": "breaking change content",
         "footer": "Fixes #42",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == (
         "fix(users): email pattern corrected\n"
         "\n"
@@ -129,7 +129,7 @@ def test_breaking_change_in_footer(config):
 
 
 def test_exclamation_mark_breaking_change(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -139,7 +139,7 @@ def test_exclamation_mark_breaking_change(config):
         "breaking_change": "",
         "footer": "Fixes #42",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == (
         "fix(users)!: email pattern corrected\n"
         "\n"
@@ -150,7 +150,7 @@ def test_exclamation_mark_breaking_change(config):
 
 
 def test_exclamation_mark_breaking_change_without_scope(config):
-    shiny = CzShiny(config)
+    emotional = CzEmotional(config)
     answers = {
         "prefix": "fix",
         "scope": "",
@@ -160,7 +160,7 @@ def test_exclamation_mark_breaking_change_without_scope(config):
         "breaking_change": "",
         "footer": "Fixes #42",
     }
-    message = shiny.message(answers)
+    message = emotional.message(answers)
     assert message == (
         "fix!: email pattern corrected\n"
         "\n"
@@ -187,6 +187,6 @@ def test_exclamation_mark_breaking_change_without_scope(config):
 #     ],
 # )
 # def test_process_commit(commit_message, expected_message, config):
-#     shiny = CzShiny(config)
-#     message = shiny.process_commit(commit_message)
+#     emotional = CzShiny(config)
+#     message = emotional.process_commit(commit_message)
 #     assert message == expected_message

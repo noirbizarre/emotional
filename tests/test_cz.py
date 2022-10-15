@@ -1,24 +1,24 @@
 import pytest
 
-from cz_shiny.cz import CzShiny
+from emotional.cz import CzEmotional
 
 
 def test_example(config):
     """just testing a string is returned. not the content"""
-    shiny = CzShiny(config)
-    example = shiny.example()
+    emotional_config = CzEmotional(config)
+    example = emotional_config.example()
     assert isinstance(example, str)
 
 
 def test_schema(config):
     """just testing a string is returned. not the content"""
-    shiny = CzShiny(config)
-    schema = shiny.schema()
+    emotional_config = CzEmotional(config)
+    schema = emotional_config.schema()
     assert isinstance(schema, str)
 
 
 def test_info(config):
     """just testing a string is returned. not the content"""
-    shiny = CzShiny(config)
-    info = shiny.info()
+    emotional_config = CzEmotional(config)
+    info = emotional_config.info()
     assert isinstance(info, str)

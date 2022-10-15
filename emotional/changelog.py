@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from .config import ShinyConfig
+from .config import EmotionalConfig
 from .utils import render_template
 
 TEMPLATE = "changelog.md.jinja"
 
 
-def render_changelog(tree: Iterable, config: ShinyConfig | None = None) -> str:
-    config = config or ShinyConfig()
+def render_changelog(tree: Iterable, config: EmotionalConfig | None = None) -> str:
+    config = config or EmotionalConfig()
     changelog: str = render_template(TEMPLATE, tree=tree, config=config, settings=config.settings)
     return changelog
 

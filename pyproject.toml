@@ -1,5 +1,5 @@
 [project]
-name = "cz-shiny"
+name = "emotional"
 version = "0.1.0"
 description = ""
 authors = [
@@ -22,7 +22,7 @@ build-backend = "pdm.pep517.api"
 
 [tool.pdm.version]
 source = "scm"
-write_to = "cz_shiny/_version.py"
+write_to = "emotional/_version.py"
 write_template = '__version__ = "{}"'
 
 [tool.pdm.dev-dependencies]
@@ -53,7 +53,7 @@ cover.composite = [
   """
   test
     --cov-report=term
-    --cov=cz_shiny
+    --cov=emotional
     --cov-report=html:reports/coverage
     --cov-report=xml:reports/coverage.xml
     --no-cov-on-fail
@@ -81,8 +81,8 @@ check.composite = [
 
 
 [tool.commitizen]
-name = "cz_shiny"
-github = "noirbizarre/cz-shiny"
+name = "emotional"
+github = "noirbizarre/emotional"
 
 
 [tool.pdm.vscode]
@@ -147,7 +147,7 @@ sections = [
   "TESTHELPERS",
   "LOCALFOLDER",
 ]
-known_first_party = ["cz_shiny"]
+known_first_party = ["emotional"]
 known_third_party = ["commitizen"]
 known_test_libs = ["pytest"]
 known_test_helpers = ["test"]
@@ -157,16 +157,16 @@ known_test_helpers = ["test"]
 addopts = "-ra"
 norecursedirs = ".git build dist"
 testpaths = [
-  "cz_shiny/",
+  "emotional/",
   "tests/",
 ]
 markers = [
-  "settings: Provide kay-value commitizen/shiny settings pair",
+  "settings: Provide key-value commitizen settings pair",
 ]
 
 
 [tool.coverage.run]
-source = ["cz_shiny"]
+source = ["emotional"]
 branch = true
 omit = [
   "tests/*",

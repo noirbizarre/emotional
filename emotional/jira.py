@@ -9,10 +9,10 @@ import re
 
 from commitizen.git import GitCommit
 
-from .config import ShinyConfig
+from .config import EmotionalConfig
 
 
-def changelog_message_hook(config: ShinyConfig, parsed_message: dict, commit: GitCommit) -> dict:
+def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit: GitCommit) -> dict:
     if not config.jira_url or not config.jira_prefixes:
         return parsed_message
 

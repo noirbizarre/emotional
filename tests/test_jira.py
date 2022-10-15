@@ -4,17 +4,17 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from cz_shiny import jira
+from emotional import jira
 
 if TYPE_CHECKING:
     from tests.conftest import Factory
 
 
-REPOSITORY = "shiny/test"
+REPOSITORY = "emotional/test"
 
 JIRA_URL = "https://company.atlassian.com"
 
-pytestmark = [pytest.mark.settings(jira_url=JIRA_URL, jira_prefixes=["TEST-", "SHINY-"])]
+pytestmark = [pytest.mark.settings(jira_url=JIRA_URL, jira_prefixes=["TEST-", "EMO-"])]
 
 
 def test_linkify_issue_in_message(factory: Factory):
@@ -27,7 +27,7 @@ def test_linkify_issue_in_message(factory: Factory):
 
 
 def test_linkify_multiple_issues_in_message(factory: Factory):
-    message = "Fixes TEST-42, TEST-51, UNKNOWN-1 and SHINY-1"
+    message = "Fixes TEST-42, TEST-51, UNKNOWN-1 and EMO-1"
     msg, commit = factory.parsed_message(type="fix", message=message)
 
     result = jira.changelog_message_hook(factory.config, msg, commit)
@@ -36,7 +36,7 @@ def test_linkify_multiple_issues_in_message(factory: Factory):
         f"Fixes [TEST-42]({JIRA_URL}/browse/TEST-42), "
         f"[TEST-51]({JIRA_URL}/browse/TEST-51), "
         "UNKNOWN-1 "
-        f"and [SHINY-1]({JIRA_URL}/browse/SHINY-1)"
+        f"and [EMO-1]({JIRA_URL}/browse/EMO-1)"
     )
 
 

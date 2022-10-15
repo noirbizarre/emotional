@@ -1,18 +1,18 @@
-# cz-shiny
+# emotional
 
-A shiny Commitizen template with emojis and integrations
+A Commitizen template for conventional commit with emojis and integrations.
 
 ## Installation
 
 ```shell
-pip install cz_shiny
+pip install emotional
 ```
 
-Then set `cz_shiny` as the Commitizen template:
+Then set `emotional` as the Commitizen template:
 
 ```toml
 [tool.commitizen]
-name = "cz_shiny"
+name = "emotional"
 ```
 
 ## Configuration

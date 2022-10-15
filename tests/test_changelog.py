@@ -5,8 +5,8 @@ from pathlib import Path
 
 from commitizen import changelog, git
 
-from cz_shiny.cz import CzShiny
-from cz_shiny.changelog import render_changelog
+from emotional.cz import CzEmotional
+from emotional.changelog import render_changelog
 
 FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
@@ -500,7 +500,7 @@ def read_changelog() -> str:
 
 
 def test_render_changelog(config, gitcommits, tags, read_changelog):
-    shiny = CzShiny(config)
+    shiny = CzEmotional(config)
 
     tree = changelog.generate_tree_from_commits(
         gitcommits, tags, shiny.commit_parser, shiny.changelog_pattern,
@@ -509,7 +509,7 @@ def test_render_changelog(config, gitcommits, tags, read_changelog):
     )
     tree = changelog.order_changelog_tree(tree, shiny.change_type_order)
 
-    result = render_changelog(tree, shiny.shiny_config)
+    result = render_changelog(tree, shiny.emotional_config)
 
     assert result == read_changelog("default")
 

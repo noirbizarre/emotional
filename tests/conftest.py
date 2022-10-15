@@ -3,9 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from random import getrandbits
 
-import pytest
 from commitizen.config import BaseConfig
 from commitizen.git import GitCommit
+
+import pytest
 
 from emotional.config import EmotionalConfig, EmotionalSettings
 
@@ -53,10 +54,10 @@ def config(settings):
 
 
 @pytest.fixture
-def shiny_config(settings) -> EmotionalConfig:
+def emotional_config(settings) -> EmotionalConfig:
     return EmotionalConfig(settings)
 
 
 @pytest.fixture
-def factory(shiny_config: EmotionalConfig) -> Factory:
-    return Factory(shiny_config)
+def factory(emotional_config: EmotionalConfig) -> Factory:
+    return Factory(emotional_config)

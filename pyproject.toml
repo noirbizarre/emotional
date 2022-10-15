@@ -150,14 +150,14 @@ sections = [
   "FUTURE",
   "STDLIB",
   "THIRDPARTY",
-  "TESTLIBS",
+  "TEST_LIBS",
   "FIRSTPARTY",
-  "TESTHELPERS",
+  "TEST_HELPERS",
   "LOCALFOLDER",
 ]
-known_first_party = ["emotional"]
+known_first_party = ["emotional", "cz_emotional"]
 known_third_party = ["commitizen"]
-known_test_libs = ["pytest"]
+known_test_libs = ["pytest", "_pytest"]
 known_test_helpers = ["test"]
 
 

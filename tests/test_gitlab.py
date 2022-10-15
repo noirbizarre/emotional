@@ -20,7 +20,7 @@ pytestmark = [pytest.mark.settings(gitlab=REPOSITORY)]
         pytest.param("https://gitlab.com", id="default"),
         pytest.param(
             "https://my.company.com",
-            marks=pytest.mark.settings(gitlab_url="https://my.company.com"),
+            marks=pytest.mark.settings(gitlab=f"https://my.company.com/{REPOSITORY}"),
             id="hosted",
         ),
     ]

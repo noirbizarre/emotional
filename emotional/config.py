@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import sys
 from dataclasses import dataclass, field, fields
 from functools import total_ordering
@@ -9,6 +10,8 @@ from commitizen.defaults import Settings
 
 from ._compat import Literal, cached_property  # type: ignore
 from .defaults import TYPES
+
+RE_HTTP = re.compile(r"(?P<server>https?://.+)/(?P<repository>[^/]+/[^/]+/?)")
 
 
 @dataclass
@@ -80,10 +83,8 @@ class EmotionalSettings(Settings):
     """A list of additional types (permit addition without loosing defaults)"""
 
     github: str | None
-    github_url: str | None
 
     gitlab: str | None
-    gitlab_url: str | None
 
     jira_url: str | None
     jira_prefixes: list[str] | None
@@ -113,19 +114,37 @@ class EmotionalConfig:
 
     @cached_property
     def github(self) -> str | None:
-        return self.settings.get("github")
+        repository = self.settings.get("github")
+        if not repository:
+            return None
+        match = RE_HTTP.match(repository)
+        return match.group("repository") if match else repository
 
     @cached_property
     def github_url(self) -> str:
-        return self.settings.get("github_url", "https://github.com")
+        repository = self.settings.get("github")
+        if repository:
+            match = RE_HTTP.match(repository)
+            if match:
+                return match.group("server")
+        return "https://github.com"
 
     @cached_property
     def gitlab(self) -> str | None:
-        return self.settings.get("gitlab")
+        repository = self.settings.get("gitlab")
+        if not repository:
+            return None
+        match = RE_HTTP.match(repository)
+        return match.group("repository") if match else repository
 
     @cached_property
     def gitlab_url(self) -> str:
-        return self.settings.get("gitlab_url", "https://gitlab.com")
+        repository = self.settings.get("gitlab")
+        if repository:
+            match = RE_HTTP.match(repository)
+            if match:
+                return match.group("server")
+        return "https://gitlab.com"
 
     @cached_property
     def jira_url(self) -> str | None:

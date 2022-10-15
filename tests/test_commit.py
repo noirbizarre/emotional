@@ -1,5 +1,6 @@
-import pytest
 from commitizen.cz.exceptions import AnswerRequiredError
+
+import pytest
 
 from emotional.cz import CzEmotional, parse_scope, parse_subject
 

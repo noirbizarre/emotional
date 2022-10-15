@@ -26,7 +26,9 @@ KEYWORDS = (
 )
 
 
-def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit: GitCommit) -> dict:
+def changelog_message_hook(
+    config: EmotionalConfig, parsed_message: dict, commit: GitCommit
+) -> dict:
     if config.github is None:
         return parsed_message
 

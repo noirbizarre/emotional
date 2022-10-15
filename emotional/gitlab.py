@@ -29,7 +29,9 @@ RE_CLOSING_PATTERN = (
 )
 
 
-def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit: GitCommit) -> dict:
+def changelog_message_hook(
+    config: EmotionalConfig, parsed_message: dict, commit: GitCommit
+) -> dict:
     if config.gitlab is None:
         return parsed_message
 

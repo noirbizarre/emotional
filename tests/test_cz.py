@@ -1,5 +1,3 @@
-import pytest
-
 from emotional.cz import CzEmotional
 
 

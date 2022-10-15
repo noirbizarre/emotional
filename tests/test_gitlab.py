@@ -70,7 +70,9 @@ def test_append_body_issue_link_to_message(factory: Factory, server: str):
 
 def test_append_footer_issue_link_to_message(factory: Factory, server: str):
     footers = "Fixes: #42"
-    msg, commit = factory.parsed_message(type="fix", message="message", body="body", footers=footers)
+    msg, commit = factory.parsed_message(
+        type="fix", message="message", body="body", footers=footers
+    )
 
     result = gitlab.changelog_message_hook(factory.config, msg, commit)
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
-import itertools
 
+import itertools
 from typing import Any
 
 from commitizen.cz.base import BaseCommitizen, BaseConfig
@@ -60,7 +60,11 @@ class CzEmotional(BaseCommitizen):
                 "name": "prefix",
                 "message": "Select the type of change you are committing",
                 "choices": [
-                    {"value": t.type, "name": f"{t.emoji} {t.type}: {t.description}", "key": t.shortcut}
+                    {
+                        "value": t.type,
+                        "name": f"{t.emoji} {t.type}: {t.description}",
+                        "key": t.shortcut,
+                    }
                     for t in self.emotional_config.known_types
                 ],
             },
@@ -160,9 +164,7 @@ class CzEmotional(BaseCommitizen):
     @property
     def change_type_order(self) -> list[str]:
         return [
-            type
-            for type in self.emotional_config.known_types
-            if type.changelog and type.heading
+            type for type in self.emotional_config.known_types if type.changelog and type.heading
         ]
 
     @property
@@ -175,7 +177,7 @@ class CzEmotional(BaseCommitizen):
                     for t in self.emotional_config.known_types
                     for alias in t.aliases
                     if t.changelog and t.aliases
-                )
+                ),
             )
         )
         return rf"^({types})?(!)?"
@@ -190,7 +192,7 @@ class CzEmotional(BaseCommitizen):
                     for t in self.emotional_config.known_types
                     for alias in t.aliases
                     if t.changelog and t.aliases
-                )
+                ),
             )
         )
         return (
@@ -212,7 +214,6 @@ class CzEmotional(BaseCommitizen):
 
     def example(self) -> str:
         return render_template("example.jinja", config=self.emotional_config)
-
 
     def schema(self) -> str:
         return (

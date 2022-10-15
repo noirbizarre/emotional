@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+import sys
 from dataclasses import dataclass, field, fields
 from functools import total_ordering
-import sys
 
 from commitizen.config import read_cfg
 from commitizen.defaults import Settings
 
+from ._compat import Literal, cached_property  # type: ignore
 from .defaults import TYPES
-from ._compat import cached_property, Literal
 
 
 @dataclass
@@ -38,7 +38,6 @@ class CommitType:
     bump: Literal["MAJOR", "MINOR", "PATCH"] = "PATCH"
 
     key: str | None = None
-
 
     def __str__(self) -> str:
         return self.type
@@ -139,4 +138,3 @@ class EmotionalConfig:
     @property
     def incremental(self) -> bool:
         return "--incremental" in sys.argv
-

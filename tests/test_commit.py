@@ -1,8 +1,7 @@
 import pytest
-
 from commitizen.cz.exceptions import AnswerRequiredError
-from emotional.cz import CzEmotional, parse_scope, parse_subject
 
+from emotional.cz import CzEmotional, parse_scope, parse_subject
 
 valid_scopes = ["", "simple", "dash-separated", "camelCase" "UPPERCASE"]
 
@@ -72,6 +71,7 @@ def test_small_answer(config):
     message = emotional.message(answers)
     assert message == "fix(users): email pattern corrected"
 
+
 def test_no_scope(config):
     emotional = CzEmotional(config)
     answers = {
@@ -98,11 +98,7 @@ def test_long_answer(config):
     }
     message = emotional.message(answers)
     assert message == (
-        "fix(users): email pattern corrected\n"
-        "\n"
-        "complete content\n"
-        "\n"
-        "closes #24"  # noqa
+        "fix(users): email pattern corrected\n" "\n" "complete content\n" "\n" "closes #24"  # noqa
     )
 
 
@@ -141,11 +137,7 @@ def test_exclamation_mark_breaking_change(config):
     }
     message = emotional.message(answers)
     assert message == (
-        "fix(users)!: email pattern corrected\n"
-        "\n"
-        "complete content\n"
-        "\n"
-        "Fixes #42"
+        "fix(users)!: email pattern corrected\n" "\n" "complete content\n" "\n" "Fixes #42"
     )
 
 
@@ -161,13 +153,8 @@ def test_exclamation_mark_breaking_change_without_scope(config):
         "footer": "Fixes #42",
     }
     message = emotional.message(answers)
-    assert message == (
-        "fix!: email pattern corrected\n"
-        "\n"
-        "complete content\n"
-        "\n"
-        "Fixes #42"
-    )
+    assert message == ("fix!: email pattern corrected\n" "\n" "complete content\n" "\n" "Fixes #42")
+
 
 # @pytest.mark.parametrize(
 #     ("commit_message", "expected_message"),

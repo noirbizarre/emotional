@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-import pytest
-
 from pathlib import Path
+from typing import Callable
 
+import pytest
 from commitizen import changelog, git
 
-from emotional.cz import CzEmotional
 from emotional.changelog import render_changelog
+from emotional.cz import CzEmotional
 
 FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
@@ -281,7 +281,7 @@ COMMITS_DATA = [
     {
         "rev": "ed830019581c83ba633bfd734720e6758eca6061",
         "title": "feat: py3 only, tests and conventional commits 1.0",
-        "body": "more tests\npyproject instead of Pipfile\nquestionary instead of whaaaaat (promptkit 2.0.0 support)",
+        "body": "more tests\npyproject instead of Pipfile\nquestionary instead of whaaaaat (promptkit 2.0.0 support)",  # noqa: E501
         "author": "Commitizen",
         "author_email": "author@cz.dev",
     },
@@ -494,9 +494,10 @@ def changelog_content() -> str:
 
 
 @pytest.fixture
-def read_changelog() -> str:
+def read_changelog() -> Callable[[str], str]:
     def reader(name: str) -> str:
         return (FIXTURES / f"{name}.md").read_text()
+
     return reader
 
 
@@ -504,9 +505,12 @@ def test_render_changelog(config, gitcommits, tags, read_changelog):
     shiny = CzEmotional(config)
 
     tree = changelog.generate_tree_from_commits(
-        gitcommits, tags, shiny.commit_parser, shiny.changelog_pattern,
+        gitcommits,
+        tags,
+        shiny.commit_parser,
+        shiny.changelog_pattern,
         change_type_map=shiny.change_type_map,
-        changelog_message_builder_hook=shiny.changelog_message_builder_hook
+        changelog_message_builder_hook=shiny.changelog_message_builder_hook,
     )
     tree = changelog.order_changelog_tree(tree, shiny.change_type_order)
 

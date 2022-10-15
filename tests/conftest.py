@@ -4,9 +4,8 @@ from dataclasses import dataclass
 from random import getrandbits
 
 import pytest
-
-from commitizen.git import GitCommit
 from commitizen.config import BaseConfig
+from commitizen.git import GitCommit
 
 from emotional.config import EmotionalConfig, EmotionalSettings
 
@@ -41,6 +40,7 @@ def settings(request) -> EmotionalSettings:
     for marker in reversed(list(request.node.iter_markers("settings"))):
         settings.update(marker.kwargs)
     return settings
+
 
 @pytest.fixture
 def config(settings):

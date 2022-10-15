@@ -24,11 +24,13 @@ def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit
         return f"[{issue}]({config.jira_url}/browse/{issue})"
 
     for field in "message", "scope":
-        if value := parsed_message[field]:
+        value = parsed_message[field]
+        if value:
             parsed_message[field] = re_issue.sub(urlize_issue, value)
 
     for field in "body", "footers":
-        if body := parsed_message.get(field):
+        body = parsed_message.get(field)
+        if body:
             for match in re_issue.finditer(body):
                 parsed_message["message"] += f" {urlize_issue(match)}"
 

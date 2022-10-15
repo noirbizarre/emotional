@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 BREAKING_CHANGES_HEADING = "Breaking changes"
 BREAKING_CHANGES_EMOJI = "🚨"
 

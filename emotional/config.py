@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, fields
-from functools import cached_property, total_ordering
+from functools import total_ordering
 import sys
-from typing import Literal
 
 from commitizen.config import read_cfg
 from commitizen.defaults import Settings
 
 from .defaults import TYPES
+from ._compat import cached_property, Literal
 
 
 @dataclass
@@ -47,23 +47,16 @@ class CommitType:
         return hash(self.type)
 
     def __eq__(self, other):
-        # Same key is same commit type
-        match other:
-            case CommitType():
-                return self.type.lower() == other.type.lower()
-            case str():
-                return self.type.lower() == other.lower()
+        if isinstance(other, CommitType):
+            return self.type.lower() == other.type.lower()
+        elif isinstance(other, str):
+            return self.type.lower() == other.lower()
 
     def __lt__(self, other):
-        # Use order to sort
-        # return self.type.lower() < other.type.lower()
-        # return self.order < other.order
-
-        match other:
-            case CommitType():
-                return self.type.lower() < other.type.lower()
-            case str():
-                return self.type.lower() < other.lower()
+        if isinstance(other, CommitType):
+            return self.type.lower() < other.type.lower()
+        elif isinstance(other, str):
+            return self.type.lower() < other.lower()
 
     @property
     def shortcut(self) -> str:

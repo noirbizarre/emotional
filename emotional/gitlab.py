@@ -40,11 +40,13 @@ def changelog_message_hook(config: EmotionalConfig, parsed_message: dict, commit
         return f"[{label}]({config.gitlab_url}/{repository}/issues/{issue})"
 
     for field in "message", "scope":
-        if value := parsed_message[field]:
+        value = parsed_message[field]
+        if value:
             parsed_message[field] = RE_ISSUE.sub(urlize_issue, value)
 
     for field in "body", "footers":
-        if body := parsed_message.get(field):
+        body = parsed_message.get(field)
+        if body:
             for match in RE_ISSUE.finditer(body):
                 parsed_message["message"] += f" {urlize_issue(match)}"
 

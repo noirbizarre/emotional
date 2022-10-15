@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from random import randbytes
+from random import getrandbits
 
 import pytest
 
@@ -9,6 +9,10 @@ from commitizen.git import GitCommit
 from commitizen.config import BaseConfig
 
 from emotional.config import EmotionalConfig, EmotionalSettings
+
+
+def randbytes(size: int) -> bytes:
+    return bytearray(getrandbits(8) for _ in range(size))
 
 
 @dataclass
@@ -19,10 +23,12 @@ class Factory:
         parsed = {"type": "chore", "scope": None, "message": "I am a message", **kwargs}
         prefix = parsed["type"]
         msg = [f'{prefix}: {parsed["message"]}']
-        if (body := parsed.get("body")) is not None:
+        body = parsed.get("body")
+        if body is not None:
             msg.extend(("", body))
-        if (footers := parsed.get("footers")) is not None:
-            msg.extend(("", footers))
+        footer = parsed.get("footer")
+        if footer is not None:
+            msg.extend(("", footer))
         return parsed, self.commit("\n".join(msg))
 
     def commit(self, title: str, **kwargs) -> GitCommit:

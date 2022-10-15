@@ -5,7 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/2e6bed0a58cd88af159f/maintainability)](https://codeclimate.com/github/noirbizarre/emotional/maintainability)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/noirbizarre/emotional/main.svg)](https://results.pre-commit.ci/latest/github/noirbizarre/emotional/main)
 
-A Commitizen template for conventional commit with emojis and integrations.
+A [Commitizen][commitizen] template for [conventional commit][conventional-commit] with emojis and integrations.
 
 ## Installation
 
@@ -21,3 +21,70 @@ name = "cz_emotional"
 ```
 
 ## Configuration
+
+As a starter, remember that all [Commitizen configuration][commitizen-config]
+is available.
+
+
+### Github integration
+
+To enable [github](https://github.com) integration, just provide your github repository as `github` setting:
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+github = "author/repository"
+```
+
+For github enterprise, you can use the full repository URL:
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+github = "https://git.company.com/author/repository"
+```
+
+### Gitlab integration
+
+To enable [gitlab](https://gitlab.com) integration, just provide your gitlab repository as `gitlab` setting:
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+gitlab = "author/repository"
+```
+
+Use the full URL for hosted gitlab instances:
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+gitlab = "https://git.company.com/author/repository"
+```
+
+### Jira integration
+
+To enable [Jira](https://www.atlassian.com/fr/software/jira) integration,
+provide your JIRA instance URL as `jira_url` setting
+and the list of project prefix you want ho be processed in `jira_prefixes`:
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+jira_url = "https://emotional.atlassian.net"
+jira_prefixes = [
+  "EMO-",
+  "PRJ-",
+]
+```
+
+### Multiple integrations
+
+While it is totally possible to mix integrations,
+keep in mind than `jira` is compatible with both `github` and `gitlab`
+while `github` and `gitlab` are conflicting because they use the same format.
+
+
+[commitizen]: https://commitizen-tools.github.io/commitizen/
+[commitizen-config]: https://commitizen-tools.github.io/commitizen/config/
+[conventional-commit]: https://www.conventionalcommits.org/

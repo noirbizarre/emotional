@@ -20,6 +20,13 @@ build-backend = "pdm.pep517.api"
 [tool]
 [tool.pdm]
 
+[tool.pdm.build]
+includes = [
+    "emotional/",
+    "cz_emotional.py",
+]
+
+
 [tool.pdm.version]
 source = "scm"
 write_to = "emotional/_version.py"
@@ -81,7 +88,7 @@ check.composite = [
 
 
 [tool.commitizen]
-name = "emotional"
+name = "cz_emotional"
 github = "noirbizarre/emotional"
 
 

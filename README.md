@@ -12,7 +12,7 @@ Then set `emotional` as the Commitizen template:
 
 ```toml
 [tool.commitizen]
-name = "emotional"
+name = "cz_emotional"
 ```
 
 ## Configuration

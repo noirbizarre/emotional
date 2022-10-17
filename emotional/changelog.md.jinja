@@ -7,13 +7,26 @@
 ### {{ type.emoji }} {{ type.heading }}
 {% endif %}
 
+{% macro render_change(change) -%}
+{%- if change.message -%}
+- {% if change.scope %}**{{ change.scope }}**: {% endif %}{{ change.message }}
+{%- endif -%}
+{% endmacro -%}
+
+{% if config.group_by_scope %}
+{% for scope, changes in changes|rejectattr("scope", "none")|groupby("scope") %}
 {% for change in changes %}
-{% if change.scope %}
-- **{{ change.scope }}**: {{ change.message }}
-{% elif change.message %}
-- {{ change.message }}
-{% endif %}
+{{ render_change(change) }}
 {% endfor %}
+{% endfor %}
+{% for change in changes|selectattr("scope", "none") %}
+{{ render_change(change) }}
+{% endfor %}
+{% else %}
+{% for change in changes %}
+{{ render_change(change) }}
+{% endfor %}
+{% endif %}
 {% endfor %}
 
 {% endfor -%}

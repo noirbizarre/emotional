@@ -18,8 +18,6 @@ license = {text = "MIT"}
 requires = ["pdm-pep517>=1.0.0"]
 build-backend = "pdm.pep517.api"
 
-[tool]
-[tool.pdm]
 
 [tool.pdm.build]
 includes = [
@@ -33,12 +31,12 @@ source = "scm"
 write_to = "emotional/_version.py"
 write_template = '__version__ = "{}"'
 
+
 [tool.pdm.dev-dependencies]
 test = [
     "pytest>=7.1.2",
     "pytest-sugar>=0.9.5",
     "pytest-cov>=3.0.0",
-    # "pytest-mock>=3.8.2",
 ]
 lint = [
     "black>=22.6.0",
@@ -47,6 +45,7 @@ lint = [
     "absolufy-imports>=0.3.1",
     "flakeheaven>=3.0.0",
 ]
+
 
 [tool.pdm.scripts]
 test.help = "Run the test suite"
@@ -96,6 +95,7 @@ github = "noirbizarre/emotional"
 [tool.pdm.vscode]
 linters = ["flakeheaven"]
 formatter = "black"
+tests = "pytest"
 
 
 [tool.black]

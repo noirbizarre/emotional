@@ -25,6 +25,18 @@ name = "cz_emotional"
 As a starter, remember that all [Commitizen configuration][commitizen-config]
 is available.
 
+### Changelog
+
+By default, changes by types are kept in order of commit and ignore the scope for ordering.
+You can however force scope to be sorted first by setting `group_by_scope`:
+
+```toml
+
+```toml
+[tool.commitizen]
+name = "cz_emotional"
+group_by_scope = true
+```
 
 ### Github integration
 

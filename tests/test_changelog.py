@@ -99,7 +99,7 @@ COMMITS_DATA = [
     },
     {
         "rev": "12d0e65beda969f7983c444ceedc2a01584f4e08",
-        "title": "docs(README): updated documentation url)",
+        "title": "docs(README): updated documentation url",
         "body": "",
         "author": "Commitizen",
         "author_email": "author@cz.dev",
@@ -177,6 +177,13 @@ COMMITS_DATA = [
     {
         "rev": "52def1ea3555185ba4b936b463311949907e31ec",
         "title": "feat: support for pyproject.toml",
+        "body": "",
+        "author": "Commitizen",
+        "author_email": "author@cz.dev",
+    },
+    {
+        "rev": "1792b8980c58787906dbe6836f93f31971b1ec22",
+        "title": "feat(config): can group by scope",
         "body": "",
         "author": "Commitizen",
         "author_email": "author@cz.dev",
@@ -502,22 +509,35 @@ def read_changelog() -> Callable[[str], str]:
     return reader
 
 
-def test_render_changelog(config, gitcommits, tags, read_changelog):
-    shiny = CzEmotional(config)
+@pytest.fixture
+def assert_changelog(config, gitcommits, tags, read_changelog):
+    def assertion(name: str):
+        cz = CzEmotional(config)
 
-    tree = changelog.generate_tree_from_commits(
-        gitcommits,
-        tags,
-        shiny.commit_parser,
-        shiny.changelog_pattern,
-        change_type_map=shiny.change_type_map,
-        changelog_message_builder_hook=shiny.changelog_message_builder_hook,
-    )
-    tree = changelog.order_changelog_tree(tree, shiny.change_type_order)
+        tree = changelog.generate_tree_from_commits(
+            gitcommits,
+            tags,
+            cz.commit_parser,
+            cz.changelog_pattern,
+            change_type_map=cz.change_type_map,
+            changelog_message_builder_hook=cz.changelog_message_builder_hook,
+        )
+        tree = changelog.order_changelog_tree(tree, cz.change_type_order)
 
-    result = render_changelog(tree, shiny.emotional_config)
+        result = render_changelog(tree, cz.emotional_config)
 
-    assert result == read_changelog("default")
+        assert result == read_changelog(name)
+
+    return assertion
+
+
+def test_render_changelog_with_default_settings(assert_changelog):
+    assert_changelog("default")
+
+
+@pytest.mark.settings(group_by_scope=True)
+def test_render_changelog_group_by_scope(assert_changelog):
+    assert_changelog("group-by-scope")
 
 
 # def test_render_changelog_unreleased(config, gitcommits):

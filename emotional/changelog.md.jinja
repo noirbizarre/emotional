@@ -3,17 +3,36 @@
 
 {% for type, changes in entry.changes.items() %}
 
-{% if type %}
+{% if type -%}
 ### {{ type.emoji }} {{ type.heading }}
+{% endif -%}
+
+{% macro render_change(change, scope=True) -%}
+{%- if change.message %}
+- {% if scope and change.scope %}**{{ change.scope }}**: {% endif %}{{ change.message }}
+{%- endif %}
+{% endmacro %}
+
+{% if config.group_by_scope %}
+{% set ns = namespace(no_scope=false) %}
+{% for change in changes|selectattr("scope", "none") %}
+{{ render_change(change) }}
+{% if loop.last %}{% set ns.no_scope=true %}{% endif %}
+{% endfor %}
+{% for scope, changes in changes|rejectattr("scope", "none")|groupby("scope") -%}
+{% if ns.no_scope +%}
 {% endif %}
+#### {{ scope }}
 
 {% for change in changes %}
-{% if change.scope %}
-- **{{ change.scope }}**: {{ change.message }}
-{% elif change.message %}
-- {{ change.message }}
-{% endif %}
+{{ render_change(change, scope=False) }}
 {% endfor %}
+{% endfor %}
+{% else %}
+{% for change in changes -%}
+{{ render_change(change) }}
+{% endfor %}
+{% endif %}
 {% endfor %}
 
 {% endfor -%}

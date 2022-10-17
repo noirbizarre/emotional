@@ -89,6 +89,8 @@ class EmotionalSettings(Settings):
     jira_url: str | None
     jira_prefixes: list[str] | None
 
+    group_by_scope: bool
+
     release_type: str
     """
     If set to an existing type, this type will be ignored except for the release commit
@@ -157,3 +159,7 @@ class EmotionalConfig:
     @property
     def incremental(self) -> bool:
         return "--incremental" in sys.argv
+
+    @property
+    def group_by_scope(self) -> bool:
+        return self.settings.get("group_by_scope", False)

@@ -17,6 +17,13 @@ Then set `emotional` as the Commitizen template:
 
 ```toml
 [tool.commitizen]
+name = "emotional"
+```
+
+If using `commitizen < 3.0`, use the legacy compatibility layer:
+
+```toml
+[tool.commitizen]
 name = "cz_emotional"
 ```
 

@@ -38,7 +38,7 @@ class CommitType:
     question: bool = True
     """Wether this type should appear in the question choices"""
 
-    bump: Literal["MAJOR", "MINOR", "PATCH"] = "PATCH"
+    bump: Literal["MAJOR", "MINOR", "PATCH"] = "PATCH"  # noqa: F821
 
     key: str | None = None
 

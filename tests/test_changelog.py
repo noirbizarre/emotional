@@ -3,9 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Callable
 
-from commitizen import changelog, git
-
 import pytest
+from commitizen import changelog, git
 
 from emotional.changelog import render_changelog
 from emotional.cz import CzEmotional

@@ -3,10 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from random import getrandbits
 
+import pytest
 from commitizen.config import BaseConfig
 from commitizen.git import GitCommit
-
-import pytest
 
 from emotional.config import EmotionalConfig, EmotionalSettings
 

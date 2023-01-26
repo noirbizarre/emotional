@@ -26,15 +26,10 @@ repos:
         files: emotional\/.+\.py
         args: [--never]
 
-  - repo: https://github.com/pycqa/isort
-    rev: 5.11.4
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.185
     hooks:
-      - id: isort
-
-  - repo: https://github.com/flakeheaven/flakeheaven
-    rev: 3.2.1
-    hooks:
-      - id: flakeheaven
+      - id: ruff
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.991

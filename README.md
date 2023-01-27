@@ -38,8 +38,6 @@ By default, changes by types are kept in order of commit and ignore the scope fo
 You can however force scope to be sorted first by setting `group_by_scope`:
 
 ```toml
-
-```toml
 [tool.commitizen]
 name = "cz_emotional"
 group_by_scope = true

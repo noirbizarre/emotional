@@ -1,4 +1,4 @@
-## Unreleased
+## 🚀 0.1.0 (2023-05-26)
 
 ### 💫 New features
 
@@ -13,6 +13,7 @@
 
 ### 📦 Build
 
+- **CHANGELOG**: use commitizen scm provider
 - update linting stack
 - drop support for Commitizen < 3.0
 - **python**: support Python 3.11

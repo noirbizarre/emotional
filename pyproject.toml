@@ -81,11 +81,16 @@ check.composite = [
   "lint",
 ]
 
+changelog.help = "Generate/update the changelog"
+changelog.cmd = "cz changelog --incremental"
+
+bump.help = "Bump the version using commitizen"
+bump.cmd = "cz bump --changelog"
 
 [tool.commitizen]
 name = "emotional"
 github = "noirbizarre/emotional"
-
+version_provider = "scm"
 
 [tool.pdm.vscode]
 linters = ["ruff"]

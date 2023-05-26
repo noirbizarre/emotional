@@ -41,6 +41,7 @@
 ### 📖 Documentation
 
 - **README**: some new information about bump
+- **README**: ensure type aliases works
 - added new changelog
 
 ## 🚀 v1.0.0 (2019-03-01)

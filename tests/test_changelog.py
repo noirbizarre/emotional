@@ -132,6 +132,13 @@ COMMITS_DATA = [
         "author_email": "author@cz.dev",
     },
     {
+        "rev": "0c7fb0ca0168864dfc55d83c210da57771a18377",
+        "title": "doc(README): ensure type aliases works",
+        "body": "",
+        "author": "Commitizen",
+        "author_email": "author@cz.dev",
+    },
+    {
         "rev": "cb1dd2019d522644da5bdc2594dd6dee17122d7f",
         "title": "feat: new working bump command",
         "body": "",

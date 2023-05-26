@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import itertools
-from typing import Any
+from typing import Any, Iterable
 
 from commitizen.cz.base import BaseCommitizen, BaseConfig
 from commitizen.cz.utils import multiple_line_breaker, required_validator
@@ -167,36 +167,30 @@ class CzEmotional(BaseCommitizen):
         ]
 
     @property
-    def changelog_pattern(self) -> str:
-        types = "|".join(
-            itertools.chain(
-                (t.type for t in self.emotional_config.known_types if t.changelog),
-                (
-                    alias
-                    for t in self.emotional_config.known_types
-                    for alias in t.aliases
-                    if t.changelog and t.aliases
-                ),
-            )
+    def known_types(self) -> Iterable[str]:
+        return itertools.chain(
+            (t.type for t in self.emotional_config.known_types if t.changelog),
+            (
+                alias
+                for t in self.emotional_config.known_types
+                for alias in t.aliases
+                if t.changelog and t.aliases
+            ),
         )
-        return rf"\A({types})(\(.+\))?(!)?"
+
+    @property
+    def re_known_types(self) -> str:
+        return "|".join(self.known_types)
+
+    @property
+    def changelog_pattern(self) -> str:
+        return rf"\A({self.re_known_types})(\(.+\))?(!)?"
 
     @property
     def commit_parser(self) -> str:
-        types = "|".join(
-            itertools.chain(
-                (t.type for t in self.emotional_config.known_types if t.changelog),
-                (
-                    alias
-                    for t in self.emotional_config.known_types
-                    for alias in t.aliases
-                    if t.changelog and t.aliases
-                ),
-            )
-        )
         return (
             rf"\A(?:(?P<emoji>{RE_EMOJI})\s*)?"
-            rf"(?P<change_type>{types})"
+            rf"(?P<change_type>{self.re_known_types})"
             r"(?:\((?P<scope>[^()\r\n]*)\)|\()?"
             r"(?P<breaking>!)?:\s"
             r"(?P<message>.*)?"
@@ -206,7 +200,16 @@ class CzEmotional(BaseCommitizen):
 
     @property
     def change_type_map(self) -> dict[str, CommitType]:
-        return {t.type: t for t in self.emotional_config.known_types}
+        # Workaround syntax for missing dict union operator in Python < 3.9
+        return {
+            **{t.type: t for t in self.emotional_config.known_types},
+            **{
+                alias: t
+                for t in self.emotional_config.known_types
+                for alias in t.aliases
+                if t.changelog and t.aliases
+            },
+        }
 
     def info(self) -> str:
         return render_template("info.md.jinja", config=self.emotional_config)
@@ -227,7 +230,7 @@ class CzEmotional(BaseCommitizen):
     def schema_pattern(self) -> str:
         PATTERN = (
             r"(?s)"  # To explictly make . match new line
-            r"(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump)"  # type
+            rf"({self.re_known_types})"  # type
             r"(\(\S+\))?!?:"  # scope
             r"( [^\n\r]+)"  # subject
             r"((\n\n.*)|(\s*))?$"

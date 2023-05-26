@@ -167,6 +167,13 @@ COMMITS_DATA = [
         "author_email": "author@cz.dev",
     },
     {
+        "rev": "1792b8980c58787906dbe6836f93f31971b1ec77",
+        "title": "Merge pull request #85 from whatever",
+        "body": "feat(config): new set key, used to set version to cfg",
+        "author": "Commitizen",
+        "author_email": "author@cz.dev",
+    },
+    {
         "rev": "1792b8980c58787906dbe6836f93f31971b1ec2d",
         "title": "feat(config): new set key, used to set version to cfg",
         "body": "",

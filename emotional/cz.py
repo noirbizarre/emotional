@@ -153,7 +153,6 @@ class CzEmotional(BaseCommitizen):
 
     def changelog_message_builder_hook(self, parsed_message: dict, commit: GitCommit) -> dict:
         """add github and jira links to the readme"""
-
         for integration in INTEGRATIONS:
             if hasattr(integration, "changelog_message_hook"):
                 parsed_message = integration.changelog_message_hook(
@@ -180,7 +179,7 @@ class CzEmotional(BaseCommitizen):
                 ),
             )
         )
-        return rf"^({types})?(!)?"
+        return rf"\A({types})(\(.+\))?(!)?"
 
     @property
     def commit_parser(self) -> str:
@@ -196,7 +195,7 @@ class CzEmotional(BaseCommitizen):
             )
         )
         return (
-            rf"^(?:(?P<emoji>{RE_EMOJI})\s*)?"
+            rf"\A(?:(?P<emoji>{RE_EMOJI})\s*)?"
             rf"(?P<change_type>{types})"
             r"(?:\((?P<scope>[^()\r\n]*)\)|\()?"
             r"(?P<breaking>!)?:\s"

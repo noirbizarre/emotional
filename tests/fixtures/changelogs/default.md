@@ -52,10 +52,6 @@
 
 ## 🚀 1.0.0b2 (2019-01-18)
 
-### 💫 New features
-
-- py3 only, tests and conventional commits 1.0
-
 ### 📖 Documentation
 
 - **README**: updated to reflect current state

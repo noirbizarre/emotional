@@ -6,7 +6,7 @@ authors = [
     {name = "Axel H.", email = "noirbizarre@gmail.com"},
 ]
 dependencies = [
-    "commitizen>=2.33.1",
+    "commitizen>=3.0",
     "typing-extensions>=4.4.0; python_version<'3.9'",
 ]
 requires-python = ">=3.7"
@@ -20,13 +20,6 @@ emotional = "emotional.cz:CzEmotional"
 [build-system]
 requires = ["pdm-pep517>=1.0.0"]
 build-backend = "pdm.pep517.api"
-
-
-[tool.pdm.build]
-includes = [
-    "emotional/",
-    "cz_emotional/",
-]
 
 
 [tool.pdm.version]

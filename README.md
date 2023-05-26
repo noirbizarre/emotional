@@ -20,13 +20,6 @@ Then set `emotional` as the Commitizen template:
 name = "emotional"
 ```
 
-If using `commitizen < 3.0`, use the legacy compatibility layer:
-
-```toml
-[tool.commitizen]
-name = "cz_emotional"
-```
-
 ## Configuration
 
 As a starter, remember that all [Commitizen configuration][commitizen-config]
@@ -39,7 +32,7 @@ You can however force scope to be sorted first by setting `group_by_scope`:
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 group_by_scope = true
 ```
 
@@ -49,7 +42,7 @@ To enable [github](https://github.com) integration, just provide your github rep
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 github = "author/repository"
 ```
 
@@ -57,7 +50,7 @@ For github enterprise, you can use the full repository URL:
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 github = "https://git.company.com/author/repository"
 ```
 
@@ -67,7 +60,7 @@ To enable [gitlab](https://gitlab.com) integration, just provide your gitlab rep
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 gitlab = "author/repository"
 ```
 
@@ -75,7 +68,7 @@ Use the full URL for hosted gitlab instances:
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 gitlab = "https://git.company.com/author/repository"
 ```
 
@@ -87,7 +80,7 @@ and the list of project prefix you want ho be processed in `jira_prefixes`:
 
 ```toml
 [tool.commitizen]
-name = "cz_emotional"
+name = "emotional"
 jira_url = "https://emotional.atlassian.net"
 jira_prefixes = [
   "EMO-",

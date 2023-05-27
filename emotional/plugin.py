@@ -48,7 +48,7 @@ def parse_subject(text):
     return required_validator(text, msg="Subject is required.")
 
 
-class CzEmotional(BaseCommitizen):
+class Emotional(BaseCommitizen):
     def __init__(self, config: BaseConfig):
         super().__init__(config)
         self.emotional_config = EmotionalConfig(config.settings)

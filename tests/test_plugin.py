@@ -1,22 +1,22 @@
-from emotional.cz import CzEmotional
+from emotional.plugin import Emotional
 
 
 def test_example(config):
     """just testing a string is returned. not the content"""
-    emotional_config = CzEmotional(config)
+    emotional_config = Emotional(config)
     example = emotional_config.example()
     assert isinstance(example, str)
 
 
 def test_schema(config):
     """just testing a string is returned. not the content"""
-    emotional_config = CzEmotional(config)
+    emotional_config = Emotional(config)
     schema = emotional_config.schema()
     assert isinstance(schema, str)
 
 
 def test_info(config):
     """just testing a string is returned. not the content"""
-    emotional_config = CzEmotional(config)
+    emotional_config = Emotional(config)
     info = emotional_config.info()
     assert isinstance(info, str)

@@ -1,7 +1,7 @@
 import pytest
 from commitizen.cz.exceptions import AnswerRequiredError
 
-from emotional.cz import CzEmotional, parse_scope, parse_subject
+from emotional.plugin import Emotional, parse_scope, parse_subject
 
 valid_scopes = ["", "simple", "dash-separated", "camelCase" "UPPERCASE"]
 
@@ -43,14 +43,23 @@ def test_subject_transformations():
 
 
 def test_questions(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     questions = emotional.questions()
     assert isinstance(questions, list)
     assert isinstance(questions[0], dict)
 
 
 def test_choices_all_have_keyboard_shortcuts(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
+    questions = emotional.questions()
+
+    list_questions = (q for q in questions if q["type"] == "list")
+    for select in list_questions:
+        assert all("key" in choice for choice in select["choices"])
+
+
+def test_choices_dont_have_duplicate_keyboard_shortcuts(config):
+    emotional = Emotional(config)
     questions = emotional.questions()
 
     list_questions = (q for q in questions if q["type"] == "list")
@@ -59,7 +68,7 @@ def test_choices_all_have_keyboard_shortcuts(config):
 
 
 def test_small_answer(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -73,7 +82,7 @@ def test_small_answer(config):
 
 
 def test_no_scope(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "",
@@ -87,7 +96,7 @@ def test_no_scope(config):
 
 
 def test_long_answer(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -103,7 +112,7 @@ def test_long_answer(config):
 
 
 def test_breaking_change_in_footer(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -125,7 +134,7 @@ def test_breaking_change_in_footer(config):
 
 
 def test_exclamation_mark_breaking_change(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "users",
@@ -142,7 +151,7 @@ def test_exclamation_mark_breaking_change(config):
 
 
 def test_exclamation_mark_breaking_change_without_scope(config):
-    emotional = CzEmotional(config)
+    emotional = Emotional(config)
     answers = {
         "prefix": "fix",
         "scope": "",

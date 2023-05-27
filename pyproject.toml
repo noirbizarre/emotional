@@ -14,7 +14,7 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [project.entry-points."commitizen.plugin"]
-emotional = "emotional.cz:CzEmotional"
+emotional = "emotional.plugin:Emotional"
 
 
 [build-system]

@@ -7,7 +7,7 @@ import pytest
 from commitizen import changelog, git
 
 from emotional.changelog import render_changelog
-from emotional.cz import CzEmotional
+from emotional.plugin import Emotional
 
 FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
@@ -525,7 +525,7 @@ def read_changelog() -> Callable[[str], str]:
 @pytest.fixture
 def assert_changelog(config, gitcommits, tags, read_changelog):
     def assertion(name: str):
-        cz = CzEmotional(config)
+        cz = Emotional(config)
 
         tree = changelog.generate_tree_from_commits(
             gitcommits,

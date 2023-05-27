@@ -1,3 +1,17 @@
+## 🚀 0.2.0 (2023-05-28)
+
+### 💫 New features
+
+- **bump**: support bump increment detection
+- **releases**: the release heading emoji can be set with `release_emoji`
+
+### 🐛 Bug fixes
+
+- **defaults**: ensure default types don't have duplicate shortcuts
+- **type_map**: ensure type aliases are properly matched
+- **changelog_pattern**: do not match conventional commit pattern outside the first line (merge commits)
+
+
 ## 🚀 0.1.0 (2023-05-26)
 
 ### 💫 New features

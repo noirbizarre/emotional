@@ -82,6 +82,7 @@ TYPES: list[dict] = [
         description="Changes not fitting in other categories",
         heading="Chores",
         emoji="🧹",
+        key="o",
     ),
     dict(
         type="revert",
@@ -89,6 +90,7 @@ TYPES: list[dict] = [
         heading="Reverted",
         emoji="🔙",
         changelog=False,
+        key="e",
     ),
     dict(
         type="wip",

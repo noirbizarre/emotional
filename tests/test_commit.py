@@ -64,7 +64,8 @@ def test_choices_dont_have_duplicate_keyboard_shortcuts(config):
 
     list_questions = (q for q in questions if q["type"] == "list")
     for select in list_questions:
-        assert all("key" in choice for choice in select["choices"])
+        shortcuts = [choice.get("key") for choice in select["choices"]]
+        assert len(set(shortcuts)) == len(shortcuts)
 
 
 def test_small_answer(config):

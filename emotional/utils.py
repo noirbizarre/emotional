@@ -10,7 +10,7 @@ def render_template(name: str, **kwargs) -> str:
     loader = ChoiceLoader(
         [
             FileSystemLoader("."),
-            PackageLoader("emotional", ""),
+            PackageLoader("emotional", "templates"),
         ]
     )
     env = Environment(loader=loader, trim_blocks=True)

@@ -1,3 +1,10 @@
+## 🚀 0.2.1 (2023-05-28)
+
+### 🐛 Bug fixes
+
+- **pyproject**: fix scm project version and build backend
+
+
 ## 🚀 0.2.0 (2023-05-28)
 
 ### 💫 New features

@@ -293,7 +293,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 lock_version = "4.2"
 cross_platform = true
 groups = ["default", "lint", "test"]
-content_hash = "sha256:2ab270fd5bc9ec5f72fb7f1ed189304df85dd82051f3051a30e06ed69fd0a372"
+content_hash = "sha256:9c6435f72efb65c108cd1b5e0436b61e6324c12c7ae86b11a030b6e3adb689e0"
 
 [metadata.files]
 "absolufy-imports 0.3.1" = [

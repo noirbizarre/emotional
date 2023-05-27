@@ -1,5 +1,5 @@
 {% for entry in tree %}
-## {% if entry.date %}🚀 {% endif %}{{ entry.version }}{% if entry.date %} ({{ entry.date }}){% endif %}
+## {% if entry.date %}{{ config.release_emoji }} {% endif %}{{ entry.version }}{% if entry.date %} ({{ entry.date }}){% endif %}
 
 {% for type, changes in entry.changes.items() %}
 

@@ -550,7 +550,12 @@ def test_render_changelog_with_default_settings(assert_changelog):
 
 @pytest.mark.settings(group_by_scope=True)
 def test_render_changelog_group_by_scope(assert_changelog):
-    assert_changelog("group-by-scope")
+    assert_changelog("group_by_scope")
+
+
+@pytest.mark.settings(release_emoji="🎉")
+def test_render_changelog_release_emoji(assert_changelog):
+    assert_changelog("release_emoji")
 
 
 # def test_render_changelog_unreleased(config, gitcommits):

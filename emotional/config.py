@@ -8,10 +8,13 @@ from functools import total_ordering
 from commitizen.config import read_cfg
 from commitizen.defaults import Settings
 
-from ._compat import Literal, cached_property  # type: ignore
-from .defaults import TYPES
+from . import defaults
+from ._compat import Literal, TypeAlias, cached_property  # type: ignore [attr-defined]
 
 RE_HTTP = re.compile(r"(?P<server>https?://.+)/(?P<repository>[^/]+/[^/]+/?)")
+
+
+Increment: TypeAlias = Literal["MAJOR", "MINOR", "PATCH"]  # noqa: F481
 
 
 @dataclass
@@ -38,7 +41,7 @@ class CommitType:
     question: bool = True
     """Wether this type should appear in the question choices"""
 
-    bump: Literal[MAJOR, MINOR, PATCH] = "PATCH"  # noqa: F821
+    bump: Increment = "PATCH"  # noqa: F821
 
     key: str | None = None
 
@@ -89,13 +92,9 @@ class EmotionalSettings(Settings):
     jira_url: str | None
     jira_prefixes: list[str] | None
 
-    group_by_scope: bool
+    group_by_scope: bool | None
 
-    release_type: str
-    """
-    If set to an existing type, this type will be ignored except for the release commit
-    and it body will serve as introduction (using markdown)
-    """
+    release_emoji: str | None
 
 
 @dataclass
@@ -104,7 +103,7 @@ class EmotionalConfig:
 
     @property
     def types(self) -> list[CommitType]:
-        return CommitType.from_list(self.settings.get("types", TYPES))
+        return CommitType.from_list(self.settings.get("types", defaults.TYPES))
 
     @property
     def extra_types(self) -> list[CommitType]:
@@ -163,3 +162,7 @@ class EmotionalConfig:
     @property
     def group_by_scope(self) -> bool:
         return self.settings.get("group_by_scope", False)
+
+    @property
+    def release_emoji(self) -> str:
+        return self.settings.get("release_emoji", defaults.RELEASE_EMOJI)

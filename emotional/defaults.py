@@ -2,6 +2,7 @@ from __future__ import annotations
 
 BREAKING_CHANGES_HEADING = "Breaking changes"
 BREAKING_CHANGES_EMOJI = "🚨"
+RELEASE_EMOJI = "🚀"
 
 
 TYPES: list[dict] = [
@@ -11,14 +12,8 @@ TYPES: list[dict] = [
         heading="New features",
         emoji="💫",
         bump="MINOR",
+        key="n",
     ),
-    # dict(
-    #     type="security",
-    #     description="A changeset fixing a security issue",
-    #     heading="Security",
-    #     emoji="🔒",
-    #     aliases=["sec"],
-    # ),
     dict(
         type="fix",
         description="A bug fix",
@@ -81,14 +76,6 @@ TYPES: list[dict] = [
         heading="Internationalization",
         emoji="🌍",
         aliases=["locales", "l10n"],
-    ),
-    dict(
-        type="release",
-        description="A new release",
-        heading="Release",
-        emoji="🚀",
-        aliases=["bump"],
-        changelog=False,
     ),
     dict(
         type="chore",

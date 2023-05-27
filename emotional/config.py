@@ -30,7 +30,7 @@ class CommitType:
     """The resulting heading in the changelog for this type"""
 
     emoji: str | None
-    """An optional emoji repsenting the type"""
+    """An optional emoji representing the type"""
 
     aliases: list[str] = field(default_factory=list)
     """Some known alternative keys (for legacy, typos...)"""
@@ -41,9 +41,13 @@ class CommitType:
     question: bool = True
     """Wether this type should appear in the question choices"""
 
-    bump: Increment = "PATCH"  # noqa: F821
+    bump: Increment | None = None
 
     key: str | None = None
+    """An optional shortcut key choices questions"""
+
+    regex: str | None = None
+    """An optional regular expression matching this type"""
 
     def __str__(self) -> str:
         return self.type

@@ -1,14 +1,15 @@
 from __future__ import annotations
 
 import itertools
-from typing import Any, Iterable
+from collections import OrderedDict
+from typing import Any
 
 from commitizen.cz.base import BaseCommitizen, BaseConfig
 from commitizen.cz.utils import multiple_line_breaker, required_validator
 from commitizen.git import GitCommit
 
 from . import github, gitlab, jira
-from .config import CommitType, EmotionalConfig
+from .config import CommitType, EmotionalConfig, Increment
 from .utils import render_template
 
 INTEGRATIONS = github, gitlab, jira
@@ -53,6 +54,42 @@ class Emotional(BaseCommitizen):
         super().__init__(config)
         self.emotional_config = EmotionalConfig(config.settings)
 
+    @property
+    def known_types(self) -> dict[str, CommitType]:
+        return dict(
+            itertools.chain(
+                ((t.type, t) for t in self.emotional_config.known_types),
+                (
+                    (alias, t)
+                    for t in self.emotional_config.known_types
+                    for alias in t.aliases
+                    if t.aliases
+                ),
+            )
+        )
+
+    @property
+    def re_known_types(self) -> str:
+        return "|".join(t.regex or k for k, t in self.known_types.items())
+
+    @property
+    def bump_pattern(self) -> str:
+        """Regex to extract information from commit (subject and body)"""
+        re_types = "|".join(t.regex or k for k, t in self.known_types.items() if t.bump)
+        return rf"^((({re_types})(\(.+\))?(!)?)|\w+!):"
+
+    @property
+    def bump_map(self) -> dict[str, Increment]:
+        """
+        Mapping the extracted information to a SemVer increment type (MAJOR, MINOR, PATCH)
+        """
+        return OrderedDict(
+            (
+                (r"^.+!$", "MAJOR"),
+                *((rf"^{t.regex or k}", t.bump) for k, t in self.known_types.items() if t.bump),
+            )
+        )
+
     def questions(self) -> list:
         questions: list[dict[str, Any]] = [
             {
@@ -66,6 +103,7 @@ class Emotional(BaseCommitizen):
                         "key": t.shortcut,
                     }
                     for t in self.emotional_config.known_types
+                    if t.question
                 ],
             },
             {
@@ -167,24 +205,9 @@ class Emotional(BaseCommitizen):
         ]
 
     @property
-    def known_types(self) -> Iterable[str]:
-        return itertools.chain(
-            (t.type for t in self.emotional_config.known_types if t.changelog),
-            (
-                alias
-                for t in self.emotional_config.known_types
-                for alias in t.aliases
-                if t.changelog and t.aliases
-            ),
-        )
-
-    @property
-    def re_known_types(self) -> str:
-        return "|".join(self.known_types)
-
-    @property
     def changelog_pattern(self) -> str:
-        return rf"\A({self.re_known_types})(\(.+\))?(!)?"
+        re_known_types = "|".join(k for k, t in self.known_types.items() if t.changelog)
+        return rf"\A({re_known_types})(\(.+\))?(!)?"
 
     @property
     def commit_parser(self) -> str:
@@ -200,16 +223,7 @@ class Emotional(BaseCommitizen):
 
     @property
     def change_type_map(self) -> dict[str, CommitType]:
-        # Workaround syntax for missing dict union operator in Python < 3.9
-        return {
-            **{t.type: t for t in self.emotional_config.known_types},
-            **{
-                alias: t
-                for t in self.emotional_config.known_types
-                for alias in t.aliases
-                if t.changelog and t.aliases
-            },
-        }
+        return self.known_types
 
     def info(self) -> str:
         return render_template("info.md.jinja", config=self.emotional_config)

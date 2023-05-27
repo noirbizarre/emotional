@@ -1,11 +1,17 @@
 from __future__ import annotations
 
-BREAKING_CHANGES_HEADING = "Breaking changes"
-BREAKING_CHANGES_EMOJI = "🚨"
 RELEASE_EMOJI = "🚀"
 
-
 TYPES: list[dict] = [
+    dict(
+        type="BREAKING CHANGE",
+        description="Changes that are not backward-compatibles",
+        heading="Breaking changes",
+        emoji="🚨",
+        bump="MAJOR",
+        regex=r"BREAKING[\-\ ]CHANGE",
+        question=False,  # Breaking changes have a dedicated question
+    ),
     dict(
         type="feat",
         description="A new feature",
@@ -19,6 +25,7 @@ TYPES: list[dict] = [
         description="A bug fix",
         heading="Bug fixes",
         emoji="🐛",
+        bump="PATCH",
     ),
     dict(
         type="perf",
@@ -26,6 +33,7 @@ TYPES: list[dict] = [
         heading="Performance",
         emoji="📈",
         aliases=["performance"],
+        bump="PATCH",
     ),
     dict(
         type="docs",
@@ -69,6 +77,7 @@ TYPES: list[dict] = [
         heading="Refactorings",
         emoji="🔧",
         changelog=False,
+        bump="PATCH",
     ),
     dict(
         type="i18n",
@@ -76,6 +85,7 @@ TYPES: list[dict] = [
         heading="Internationalization",
         emoji="🌍",
         aliases=["locales", "l10n"],
+        bump="PATCH",
     ),
     dict(
         type="chore",

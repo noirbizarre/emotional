@@ -548,6 +548,11 @@ def test_render_changelog_with_default_settings(assert_changelog):
     assert_changelog("default")
 
 
+@pytest.mark.settings(order_by_scope=True)
+def test_render_changelog_order_by_scope(assert_changelog):
+    assert_changelog("order_by_scope")
+
+
 @pytest.mark.settings(group_by_scope=True)
 def test_render_changelog_group_by_scope(assert_changelog):
     assert_changelog("group_by_scope")

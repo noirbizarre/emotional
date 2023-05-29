@@ -96,6 +96,7 @@ class EmotionalSettings(Settings):
     jira_url: str | None
     jira_prefixes: list[str] | None
 
+    order_by_scope: bool | None
     group_by_scope: bool | None
 
     release_emoji: str | None
@@ -164,9 +165,13 @@ class EmotionalConfig:
         return "--incremental" in sys.argv
 
     @property
+    def order_by_scope(self) -> bool:
+        return self.settings.get("order_by_scope") or False
+
+    @property
     def group_by_scope(self) -> bool:
-        return self.settings.get("group_by_scope", False)
+        return self.settings.get("group_by_scope") or False
 
     @property
     def release_emoji(self) -> str:
-        return self.settings.get("release_emoji", defaults.RELEASE_EMOJI)
+        return self.settings.get("release_emoji") or defaults.RELEASE_EMOJI

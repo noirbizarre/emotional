@@ -13,7 +13,14 @@
 {%- endif %}
 {% endmacro %}
 
-{% if config.group_by_scope %}
+{% if config.order_by_scope %}
+{% for change in changes|rejectattr("scope", "none")|sort(attribute="scope",) %}
+{{ render_change(change) }}
+{% endfor %}
+{% for change in changes|selectattr("scope", "none") %}
+{{ render_change(change) }}
+{% endfor %}
+{% elif config.group_by_scope %}
 {% set ns = namespace(no_scope=false) %}
 {% for change in changes|selectattr("scope", "none") %}
 {{ render_change(change) }}

@@ -28,7 +28,15 @@ is available.
 ### Changelog
 
 By default, changes by types are kept in order of commit and ignore the scope for ordering.
-You can however force scope to be sorted first by setting `group_by_scope`:
+You can however force scope to be sorted first by setting `order_by_scope`:
+
+```toml
+[tool.commitizen]
+name = "emotional"
+order_by_scope = true
+```
+
+You can also group changes into subsections by scope by setting `group_by_scope`:
 
 ```toml
 [tool.commitizen]

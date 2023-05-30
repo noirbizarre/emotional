@@ -11,7 +11,7 @@ TEMPLATE = "changelog.md.jinja"
 def render_changelog(tree: Iterable, config: EmotionalConfig | None = None) -> str:
     config = config or EmotionalConfig()
     changelog: str = render_template(TEMPLATE, tree=tree, config=config, settings=config.settings)
-    return changelog
+    return changelog.rstrip() + "\n"
 
 
 def monkeypatch():

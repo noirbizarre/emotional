@@ -1,3 +1,10 @@
+## 🚀 0.3.0 (2023-05-30)
+
+### 💫 New features
+
+- **changelog**: add `order_by_scope` options to group changes with the same scope first
+
+
 ## 🚀 0.2.1 (2023-05-28)
 
 ### 🐛 Bug fixes

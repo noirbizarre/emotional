@@ -1,45 +1,19 @@
+{% import 'macros.md.jinja' as macros %}
 {% for entry in tree %}
-## {% if entry.date %}{{ config.release_emoji }} {% endif %}{{ entry.version }}{% if entry.date %} ({{ entry.date }}){% endif %}
+## {% if entry.date %}{{ config.release_emoji }} {% endif %}{{ entry.version }}{% if entry.date %} ({{ entry.date }})
+{% endif %}
 
 {% for type, changes in entry.changes.items() %}
-
-{% if type -%}
+{% if type %}
 ### {{ type.emoji }} {{ type.heading }}
-{% endif -%}
 
-{% macro render_change(change, scope=True) -%}
-{%- if change.message %}
-- {% if scope and change.scope %}**{{ change.scope }}**: {% endif %}{{ change.message }}
-{%- endif %}
-{% endmacro %}
-
+{% endif %}
 {% if config.order_by_scope %}
-{% for change in changes|rejectattr("scope", "none")|sort(attribute="scope",) %}
-{{ render_change(change) }}
-{% endfor %}
-{% for change in changes|selectattr("scope", "none") %}
-{{ render_change(change) }}
-{% endfor %}
+{{ macros.render_changes_ordered_by_scope(changes) }}
 {% elif config.group_by_scope %}
-{% set ns = namespace(no_scope=false) %}
-{% for change in changes|selectattr("scope", "none") %}
-{{ render_change(change) }}
-{% if loop.last %}{% set ns.no_scope=true %}{% endif %}
-{% endfor %}
-{% for scope, changes in changes|rejectattr("scope", "none")|groupby("scope") -%}
-{% if ns.no_scope +%}
-{% endif %}
-#### {{ scope }}
-
-{% for change in changes %}
-{{ render_change(change, scope=False) }}
-{% endfor %}
-{% endfor %}
+{{ macros.render_changes_grouped_by_scope(changes) }}
 {% else %}
-{% for change in changes -%}
-{{ render_change(change) }}
-{% endfor %}
+{{ macros.render_changes(changes) }}
 {% endif %}
 {% endfor %}
-
-{% endfor -%}
+{% endfor %}

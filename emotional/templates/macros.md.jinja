@@ -1,0 +1,37 @@
+{% macro render_change(change, scope=True) %}
+{% if change.message -%}
+- {% if scope and change.scope %}**{{ change.scope }}**: {% endif %}{{ change.message }}
+{%- endif %}
+{% endmacro %}
+
+{% macro render_changes(changes) %}
+{% for change in changes -%}
+{{ render_change(change) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_changes_ordered_by_scope(changes) %}
+{% for change in changes|rejectattr("scope", "none")|sort(attribute="scope",) %}
+{{ render_change(change) }}
+{% endfor %}
+{% for change in changes|selectattr("scope", "none") %}
+{{ render_change(change) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_changes_grouped_by_scope(changes) %}
+{% set ns = namespace(no_scope=false) %}
+{% for change in changes|selectattr("scope", "none") %}
+{{ render_change(change) }}
+{% if loop.last %}{% set ns.no_scope=true %}{% endif %}
+{% endfor %}
+{% for scope, changes in changes|rejectattr("scope", "none")|groupby("scope") %}
+{% if ns.no_scope +%}
+{% endif %}
+#### {{ scope }}
+
+{% for change in changes %}
+{{ render_change(change, scope=False) }}
+{% endfor %}
+{% endfor %}
+{% endmacro %}

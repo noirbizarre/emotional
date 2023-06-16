@@ -1,3 +1,9 @@
+## 🚀 0.3.2 (2023-06-16)
+
+### 🐛 Bug fixes
+
+- **bump**: restore the hidden `bump` type validating bump commits
+
 ## 🚀 0.3.1 (2023-06-16)
 
 ### 🐛 Bug fixes

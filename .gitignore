@@ -99,6 +99,7 @@ __pypackages__/
 # PDM
 .pdm.toml
 .pdm-python
+.pdm-build
 
 # Celery stuff
 celerybeat-schedule

@@ -71,8 +71,6 @@ MAJOR_INCREMENTS_EXCLAMATION_OTHER_TYPE = [
 def test_find_increment(messages, expected_type, config):
     cz = Emotional(config)
     commits = [GitCommit(rev="test", title=message) for message in messages]
-    print("bump_pattern:", cz.bump_pattern)
-    print("bump_map:", cz.bump_map)
     increment_type = bump.find_increment(
         commits,
         regex=cz.bump_pattern,

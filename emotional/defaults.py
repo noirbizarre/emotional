@@ -109,4 +109,13 @@ TYPES: list[dict] = [
         emoji="🚧",
         changelog=False,
     ),
+    dict(
+        type="bump",
+        description="A bump commit",
+        heading="",
+        emoji=RELEASE_EMOJI,
+        aliases=["release"],
+        changelog=False,
+        question=False,
+    ),
 ]

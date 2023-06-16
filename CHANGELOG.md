@@ -1,3 +1,9 @@
+## 🚀 0.3.1 (2023-06-16)
+
+### 🐛 Bug fixes
+
+- **changelog**: ensure produced changelog is compliant with standard pre-commit trimming rule
+
 ## 🚀 0.3.0 (2023-05-30)
 
 ### 💫 New features

@@ -77,3 +77,27 @@ def test_find_increment(messages, expected_type, config):
         increments_map=cz.bump_map,
     )
     assert increment_type == expected_type
+
+
+@pytest.mark.parametrize(
+    "messages, expected_type",
+    (
+        (PATCH_INCREMENTS, "PATCH"),
+        (MINOR_INCREMENTS, "MINOR"),
+        (MAJOR_INCREMENTS_BREAKING_CHANGE, "MINOR"),
+        (MAJOR_INCREMENTS_BREAKING_CHANGE_ALT, "MINOR"),
+        (MAJOR_INCREMENTS_EXCLAMATION_OTHER_TYPE, "MINOR"),
+        (MAJOR_INCREMENTS_EXCLAMATION, "MINOR"),
+        (MAJOR_INCREMENTS_EXCLAMATION_SAMPLE_2, "MINOR"),
+        (NONE_INCREMENT, None),
+    ),
+)
+def test_find_increment_major_version_zero(messages, expected_type, config):
+    cz = Emotional(config)
+    commits = [GitCommit(rev="test", title=message) for message in messages]
+    increment_type = bump.find_increment(
+        commits,
+        regex=cz.bump_pattern,
+        increments_map=cz.bump_map_major_version_zero,
+    )
+    assert increment_type == expected_type

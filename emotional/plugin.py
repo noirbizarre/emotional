@@ -90,6 +90,13 @@ class Emotional(BaseCommitizen):
             )
         )
 
+    @property
+    def bump_map_major_version_zero(self) -> dict[str, Increment]:
+        return OrderedDict(
+            (pattern, increment.replace("MAJOR", "MINOR"))
+            for pattern, increment in self.bump_map.items()
+        )
+
     def questions(self) -> list:
         questions: list[dict[str, Any]] = [
             {

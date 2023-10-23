@@ -1,3 +1,19 @@
+## 🚀 0.4.0 (2023-10-23)
+
+### 🚨 Breaking changes
+
+- Requires `commitizen >= 0.12`
+
+### 💫 New features
+
+- **bump**: support bumpimg with `major_version_zero`
+
+### 📦 Build
+
+- **commitizen**: upgrade to `commitizen >= 0.12` changelog template handling
+- **python**: drop Python 3.7 support
+
+
 ## 🚀 0.3.2 (2023-06-16)
 
 ### 🐛 Bug fixes

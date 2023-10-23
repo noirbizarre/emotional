@@ -89,6 +89,8 @@ bump.cmd = "cz bump --changelog"
 name = "emotional"
 github = "noirbizarre/emotional"
 version_provider = "scm"
+order_by_scope = true
+major_version_zero = true  # Remove this line for the first 1.x release
 
 [tool.pdm.vscode]
 linters = ["ruff"]

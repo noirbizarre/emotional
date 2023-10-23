@@ -7,10 +7,6 @@ try:
 except ImportError:
     from importlib_resources import files  # type: ignore[no-redef,import-not-found]
 
-from .changelog import monkeypatch
-
-monkeypatch()
-
 
 def read_version() -> str:
     try:

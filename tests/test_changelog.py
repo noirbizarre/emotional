@@ -5,11 +5,25 @@ from typing import Callable
 
 import pytest
 from commitizen import changelog, git
+from syrupy.constants import TEXT_ENCODING
+from syrupy.extensions.single_file import SingleFileSnapshotExtension
 
-from emotional.changelog import render_changelog
 from emotional.plugin import Emotional
 
 FIXTURES = Path(__file__).parent / "fixtures/changelogs"
+
+
+class MarkdownSnapshotExtension(SingleFileSnapshotExtension):
+    _file_extension = "md"
+
+    def serialize(self, data: str, **kwargs) -> bytes:
+        return str(data).encode(TEXT_ENCODING)
+
+
+@pytest.fixture
+def snapshot(snapshot):
+    return snapshot.use_extension(MarkdownSnapshotExtension)
+
 
 COMMITS_DATA = [
     {
@@ -523,8 +537,8 @@ def read_changelog() -> Callable[[str], str]:
 
 
 @pytest.fixture
-def assert_changelog(config, gitcommits, tags, read_changelog):
-    def assertion(name: str):
+def render_changelog(config, gitcommits, tags):
+    def fixture():
         cz = Emotional(config)
 
         tree = changelog.generate_tree_from_commits(
@@ -537,30 +551,30 @@ def assert_changelog(config, gitcommits, tags, read_changelog):
         )
         tree = changelog.order_changelog_tree(tree, cz.change_type_order)
 
-        result = render_changelog(tree, cz.emotional_config)
+        return changelog.render_changelog(
+            tree, cz.template_loader, "CHANGELOG.md.j2", **cz.template_extras
+        )
 
-        assert result == read_changelog(name)
-
-    return assertion
+    return fixture
 
 
-def test_render_changelog_with_default_settings(assert_changelog):
-    assert_changelog("default")
+def test_render_changelog_with_default_settings(render_changelog, snapshot):
+    render_changelog() == snapshot
 
 
 @pytest.mark.settings(order_by_scope=True)
-def test_render_changelog_order_by_scope(assert_changelog):
-    assert_changelog("order_by_scope")
+def test_render_changelog_order_by_scope(render_changelog, snapshot):
+    render_changelog() == snapshot
 
 
 @pytest.mark.settings(group_by_scope=True)
-def test_render_changelog_group_by_scope(assert_changelog):
-    assert_changelog("group_by_scope")
+def test_render_changelog_group_by_scope(render_changelog, snapshot):
+    render_changelog() == snapshot
 
 
 @pytest.mark.settings(release_emoji="🎉")
-def test_render_changelog_release_emoji(assert_changelog):
-    assert_changelog("release_emoji")
+def test_render_changelog_release_emoji(render_changelog, snapshot):
+    render_changelog() == snapshot
 
 
 # def test_render_changelog_unreleased(config, gitcommits):

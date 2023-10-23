@@ -7,6 +7,7 @@ from typing import Any
 from commitizen.cz.base import BaseCommitizen, BaseConfig
 from commitizen.cz.utils import multiple_line_breaker, required_validator
 from commitizen.git import GitCommit
+from jinja2 import PackageLoader
 
 from . import github, gitlab, jira
 from .config import CommitType, EmotionalConfig, Increment
@@ -50,6 +51,8 @@ def parse_subject(text):
 
 
 class Emotional(BaseCommitizen):
+    template_loader = PackageLoader("emotional", "templates")
+
     def __init__(self, config: BaseConfig):
         super().__init__(config)
         self.emotional_config = EmotionalConfig(config.settings)
@@ -257,3 +260,7 @@ class Emotional(BaseCommitizen):
             r"((\n\n.*)|(\s*))?$"
         )
         return PATTERN
+
+    @property
+    def template_extras(self) -> dict[str, Any]:
+        return {"config": self.emotional_config, "settings": self.emotional_config.settings}

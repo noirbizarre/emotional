@@ -49,13 +49,14 @@ jobs:
           increment: ${{ github.event.inputs.increment }}
           debug: true
 
-      - name: Wait for CI tests to succeed
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ env.REVISION }}
-          running-workflow-name: CI
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+      # Disabled until a viable alternative if found/developed
+      # - name: Wait for CI tests to succeed
+      #   uses: lewagon/wait-on-check-action@v1.3.1
+      #   with:
+      #     ref: ${{ env.REVISION }}
+      #     running-workflow-name: CI
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     wait-interval: 10
 
       - name: Build artifacts
         run: pdm build

@@ -36,7 +36,7 @@ jobs:
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v3
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: true
 
       - name: Bump using commitizen
@@ -59,7 +59,9 @@ jobs:
       #     wait-interval: 10
 
       - name: Build artifacts
-        run: pdm build --no-clean
+        run: |
+          sudo rm -fr .pdm-build
+          pdm build --no-clean -v
 
       - name: Github Release
         id: github-release

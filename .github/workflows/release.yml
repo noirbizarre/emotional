@@ -45,7 +45,7 @@ jobs:
         with:
           github_token: ${{ secrets.PAT }}
           changelog_increment_filename: body.md
-          extra_requirements: emotional
+          extra_requirements: .
           increment: ${{ github.event.inputs.increment }}
           debug: true
 

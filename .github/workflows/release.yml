@@ -59,7 +59,7 @@ jobs:
       #     wait-interval: 10
 
       - name: Build artifacts
-        run: pdm build
+        run: pdm build --no-clean
 
       - name: Github Release
         id: github-release

@@ -206,7 +206,7 @@ class Emotional(BaseCommitizen):
         return parsed_message
 
     @property
-    def change_type_order(self) -> list[str]:
+    def change_type_order(self) -> list[CommitType]:
         return [
             type for type in self.emotional_config.known_types if type.changelog and type.heading
         ]

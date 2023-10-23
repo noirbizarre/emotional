@@ -4,14 +4,20 @@ description = "A Commitizen plugin for conventional commit with emojis and integ
 authors = [
     {name = "Axel H.", email = "noirbizarre@gmail.com"},
 ]
+requires-python = ">=3.8"
 dependencies = [
-    "commitizen>=3.0",
+    "commitizen>=3.10,<3.12",
     "typing-extensions>=4.4.0; python_version<'3.10'",
+    "importlib-resources>=1.3;python_version<'3.9'",
 ]
 dynamic = ["version"]
-requires-python = ">=3.7"
 readme = "README.md"
 license = {text = "MIT"}
+
+[project.urls]
+Homepage = "https://github.com/noirbizarre/emotional"
+Repository = "https://github.com/noirbizarre/emotional"
+Issues = "https://github.com/noirbizarre/emotional/issues"
 
 [project.entry-points."commitizen.plugin"]
 emotional = "emotional.plugin:Emotional"
@@ -21,11 +27,9 @@ emotional = "emotional.plugin:Emotional"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-
 [tool.pdm.version]
 source = "scm"
-write_to = "emotional/_version.py"
-write_template = '__version__ = "{}"'
+write_to = "emotional/VERSION"
 
 
 [tool.pdm.dev-dependencies]
@@ -62,20 +66,14 @@ cover.composite = [
   """
 ]
 
-"cover:tox".help = "Run the test suite against all supported Python version"
-"cover:tox".composite = [
-  "echo '🚦 Tests'",
-  "coverage erase",
-  "tox -p",
-  "echo '\n📸 Coverage'",
-  "coverage report",
-  "coverage xml -o reports/tox/coverage.xml",
-  "coverage html -d reports/tox/coverage",
-]
+"cover:all".help = "Run the test suite against all supported Python version"
+"pre_cover:all" = "coverage erase"
+"cover:all".cmd = "tox --parallel"
 
 check.help = "Check everything"
 check.composite = [
-  "cover:tox",
+  "echo '🚦 Tests & Coverage 📸'",
+  "cover:all",
   "echo '\n🎨 Style'",
   "lint",
 ]
@@ -121,7 +119,7 @@ omit = [
 ]
 
 [tool.coverage.report]
-exclude_lines = [
+exclude_also = [
   'def __repr__',
   'if TYPE_CHECKING:',
 ]

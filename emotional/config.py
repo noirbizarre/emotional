@@ -3,13 +3,14 @@ from __future__ import annotations
 import re
 import sys
 from dataclasses import dataclass, field, fields
-from functools import total_ordering
+from functools import cached_property, total_ordering
+from typing import Literal
 
 from commitizen.config import read_cfg
 from commitizen.defaults import Settings
 
 from . import defaults
-from ._compat import Literal, TypeAlias, cached_property  # type: ignore [attr-defined]
+from ._compat import TypeAlias  # type: ignore [attr-defined]
 
 RE_HTTP = re.compile(r"(?P<server>https?://.+)/(?P<repository>[^/]+/[^/]+/?)")
 

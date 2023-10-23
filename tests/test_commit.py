@@ -1,4 +1,5 @@
 import pytest
+from commitizen.commands.check import Check
 from commitizen.cz.exceptions import AnswerRequiredError
 
 from emotional.plugin import Emotional, parse_scope, parse_subject
@@ -166,24 +167,15 @@ def test_exclamation_mark_breaking_change_without_scope(config):
     assert message == ("fix!: email pattern corrected\n" "\n" "complete content\n" "\n" "Fixes #42")
 
 
-# @pytest.mark.parametrize(
-#     ("commit_message", "expected_message"),
-#     [
-#         (
-#             "test(test_scope): this is test msg",
-#             "this is test msg",
-#         ),
-#         (
-#             "test(test_scope)!: this is test msg",
-#             "this is test msg",
-#         ),
-#         (
-#             "test!(test_scope): this is test msg",
-#             "",
-#         ),
-#     ],
-# )
-# def test_process_commit(commit_message, expected_message, config):
-#     emotional = CzShiny(config)
-#     message = emotional.process_commit(commit_message)
-#     assert message == expected_message
+@pytest.mark.parametrize(
+    "message",
+    [
+        "bump: version 0.0.0 → 0.1.0",
+        "bump: version 0.1.0 → 0.1.1",
+        "bump: version 1.0.0 → 1.1.0",
+    ],
+)
+def test_validate_bump_commit(config, message: str):
+    emotional = Emotional(config)
+    check = Check(config, {"message": message})
+    check.validate_commit_message(message, emotional.schema_pattern())

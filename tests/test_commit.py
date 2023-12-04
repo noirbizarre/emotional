@@ -109,7 +109,11 @@ def test_long_answer(config):
     }
     message = emotional.message(answers)
     assert message == (
-        "fix(users): email pattern corrected\n" "\n" "complete content\n" "\n" "closes #24"  # noqa
+        "fix(users): email pattern corrected\n"
+        "\n"
+        "complete content\n"
+        "\n"
+        "closes #24"  # noqa
     )
 
 

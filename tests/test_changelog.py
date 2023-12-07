@@ -559,22 +559,22 @@ def render_changelog(config, gitcommits, tags):
 
 
 def test_render_changelog_with_default_settings(render_changelog, snapshot):
-    render_changelog() == snapshot
+    assert render_changelog() == snapshot
 
 
 @pytest.mark.settings(order_by_scope=True)
 def test_render_changelog_order_by_scope(render_changelog, snapshot):
-    render_changelog() == snapshot
+    assert render_changelog() == snapshot
 
 
 @pytest.mark.settings(group_by_scope=True)
 def test_render_changelog_group_by_scope(render_changelog, snapshot):
-    render_changelog() == snapshot
+    assert render_changelog() == snapshot
 
 
 @pytest.mark.settings(release_emoji="🎉")
 def test_render_changelog_release_emoji(render_changelog, snapshot):
-    render_changelog() == snapshot
+    assert render_changelog() == snapshot
 
 
 # def test_render_changelog_unreleased(config, gitcommits):

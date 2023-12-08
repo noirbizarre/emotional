@@ -1,3 +1,15 @@
+## 🚀 0.4.1 (2023-12-08)
+
+### 🐛 Bug fixes
+
+- **changelog**: ensure rendered changelog is compatible with `pre-commit` `end-of-file-fixer`
+
+### 📦 Build
+
+- **version**: use a simpler way to fetch version from `VERSION`
+
+<!-- End of file -->
+
 ## 🚀 0.4.0 (2023-10-23)
 
 ### 🚨 Breaking changes

@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+import re
+from typing import Any, TypedDict, cast
+
 import pytest
 from commitizen.commands.check import Check
 from commitizen.cz.exceptions import AnswerRequiredError
@@ -109,11 +114,7 @@ def test_long_answer(config):
     }
     message = emotional.message(answers)
     assert message == (
-        "fix(users): email pattern corrected\n"
-        "\n"
-        "complete content\n"
-        "\n"
-        "closes #24"  # noqa
+        "fix(users): email pattern corrected\n" "\n" "complete content\n" "\n" "closes #24"  # noqa
     )
 
 
@@ -183,3 +184,36 @@ def test_validate_bump_commit(config, message: str):
     emotional = Emotional(config)
     check = Check(config, {"message": message})
     check.validate_commit_message(message, emotional.schema_pattern())
+
+
+class ParsedCommit(TypedDict):
+    change_type: str
+    message: str
+    emoji: str | None
+    scope: str | None
+    breaking: str | None
+    body: str | None
+    footer: str | None
+
+
+def commit(change_type: str, message: str, **kwargs) -> ParsedCommit:
+    params: dict[str, Any] = {k: kwargs.get(k) for k in ParsedCommit.__annotations__}
+    params["change_type"] = change_type
+    params["message"] = message
+    return cast(ParsedCommit, params)
+
+
+PARSED_COMMITS = (
+    ("fix: something", commit("fix", "something")),
+    ("fix(scope): something", commit("fix", "something", scope="scope")),
+    ("bump: version 1.1.1 → 1.2.0", commit("bump", "version 1.1.1 → 1.2.0")),
+)
+
+
+@pytest.mark.parametrize("message,expected", PARSED_COMMITS)
+def test_commit_parser(config, message, expected):
+    emotional = Emotional(config)
+    parser = re.compile(emotional.commit_parser, re.MULTILINE)
+    parsed = parser.match(message)
+    assert parsed, f"Unparsed commit: {message}"
+    assert ParsedCommit(**parsed.groupdict()) == expected

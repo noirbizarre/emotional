@@ -11,6 +11,12 @@
 
 ## 🚀 v1.1.1 (2019-04-18)
 
+### 🚨 Breaking changes
+
+- **commit**: moved most of the commit logic to the commit command
+- changed stdout statements
+- I broke something
+
 ### 🐛 Bug fixes
 
 - **bump**: commit message now fits better with semver
@@ -45,6 +51,10 @@
 - added new changelog
 
 ## 🚀 v1.0.0 (2019-03-01)
+
+### 🚨 Breaking changes
+
+- API is stable
 
 ### 📖 Documentation
 

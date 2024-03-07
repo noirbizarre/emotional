@@ -5,8 +5,7 @@ from typing import Callable
 
 import pytest
 from commitizen import changelog, git
-from syrupy.constants import TEXT_ENCODING
-from syrupy.extensions.single_file import SingleFileSnapshotExtension
+from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
 
 from emotional.plugin import Emotional
 
@@ -15,9 +14,7 @@ FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
 class MarkdownSnapshotExtension(SingleFileSnapshotExtension):
     _file_extension = "md"
-
-    def serialize(self, data: str, **kwargs) -> bytes:
-        return str(data).encode(TEXT_ENCODING)
+    _write_mode = WriteMode.TEXT
 
 
 @pytest.fixture
@@ -63,7 +60,7 @@ COMMITS_DATA = [
     },
     {
         "rev": "74c6134b1b2e6bb8b07ed53410faabe99b204f36",
-        "title": "refactor: changed stdout statements",
+        "title": "refactor!: changed stdout statements",
         "body": "",
         "author": "Commitizen",
         "author_email": "author@cz.dev",
@@ -85,7 +82,7 @@ COMMITS_DATA = [
     {
         "rev": "c35dbffd1bb98bb0b3d1593797e79d1c3366af8f",
         "title": "refactor(schema): command logic removed from commitizen base",
-        "body": "",
+        "body": "BREAKING CHANGE: I broke something",
         "author": "Commitizen",
         "author_email": "author@cz.dev",
     },
@@ -105,7 +102,7 @@ COMMITS_DATA = [
     },
     {
         "rev": "d839e317e5b26671b010584ad8cc6bf362400fa1",
-        "title": "refactor(commit): moved most of the commit logic to the commit command",
+        "title": "refactor(commit)!: moved most of the commit logic to the commit command",
         "body": "",
         "author": "Commitizen",
         "author_email": "author@cz.dev",

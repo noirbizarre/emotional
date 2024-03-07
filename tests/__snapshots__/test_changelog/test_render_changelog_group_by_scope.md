@@ -11,6 +11,15 @@
 
 ## 🚀 v1.1.1 (2019-04-18)
 
+### 🚨 Breaking changes
+
+- changed stdout statements
+- I broke something
+
+#### commit
+
+- moved most of the commit logic to the commit command
+
 ### 🐛 Bug fixes
 
 - conventional commit 'breaking change' in body instead of title
@@ -57,6 +66,10 @@
 - ensure type aliases works
 
 ## 🚀 v1.0.0 (2019-03-01)
+
+### 🚨 Breaking changes
+
+- API is stable
 
 ### 📖 Documentation
 

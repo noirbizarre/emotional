@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import itertools
 from collections import OrderedDict
-from typing import Any
+from typing import Any, Iterable
 
 from commitizen.cz.base import BaseCommitizen, BaseConfig
 from commitizen.cz.utils import multiple_line_breaker, required_validator
@@ -30,6 +30,8 @@ RE_EMOJI = (
     "\U00002702-\U000027B0"  # Dingbats
     "]"
 )
+
+BREAKING_CHANGE_TYPE = "BREAKING CHANGE"
 
 
 def parse_scope(text):
@@ -199,8 +201,16 @@ class Emotional(BaseCommitizen):
 
         return message
 
-    def changelog_message_builder_hook(self, parsed_message: dict, commit: GitCommit) -> dict:
+    def changelog_message_builder_hook(
+        self, parsed_message: dict, commit: GitCommit
+    ) -> dict[str, Any] | Iterable[dict[str, Any]] | None:
         """add github and jira links to the readme"""
+        # Remap breaking changes type
+        if parsed_message.get("breaking"):
+            parsed_message["change_type"] = BREAKING_CHANGE_TYPE
+        # Filter out changes not meant to appear in the changelog
+        if (ct := self.known_types.get(parsed_message["change_type"])) and not ct.changelog:
+            return None
         for integration in INTEGRATIONS:
             if hasattr(integration, "changelog_message_hook"):
                 parsed_message = integration.changelog_message_hook(
@@ -216,7 +226,7 @@ class Emotional(BaseCommitizen):
 
     @property
     def changelog_pattern(self) -> str:
-        re_known_types = "|".join(k for k, t in self.known_types.items() if t.changelog)
+        re_known_types = "|".join(k for k, t in self.known_types.items())
         return rf"\A({re_known_types})(\(.+\))?(!)?"
 
     @property

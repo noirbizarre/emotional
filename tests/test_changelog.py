@@ -4,10 +4,11 @@ from pathlib import Path
 from typing import Callable
 
 import pytest
-from commitizen import changelog, git
+from commitizen import git
+from commitizen.commands.changelog import Changelog
+from commitizen.exceptions import DryRunExit
+from pytest_mock import MockerFixture
 from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
-
-from emotional.plugin import Emotional
 
 FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
@@ -534,23 +535,24 @@ def read_changelog() -> Callable[[str], str]:
 
 
 @pytest.fixture
-def render_changelog(config, gitcommits, tags):
-    def fixture():
-        cz = Emotional(config)
+def render_changelog(config, gitcommits, tags, capsys, mocker: MockerFixture):
+    """
+    Generate a changelog using the same flow as the cz changelog command.
+    """
 
-        tree = changelog.generate_tree_from_commits(
-            gitcommits,
-            tags,
-            cz.commit_parser,
-            cz.changelog_pattern,
-            change_type_map=cz.change_type_map,
-            changelog_message_builder_hook=cz.changelog_message_builder_hook,
-        )
-        tree = changelog.order_changelog_tree(tree, cz.change_type_order)
-
-        return changelog.render_changelog(
-            tree, cz.template_loader, "CHANGELOG.md.j2", **cz.template_extras
-        )
+    def fixture(incremental: bool = False, unreleased: bool = True, **kwargs) -> str:
+        mocker.patch("commitizen.git.get_commits", return_value=gitcommits)
+        mocker.patch("commitizen.git.get_tags", return_value=tags)
+        kwargs["dry_run"] = True
+        kwargs["incremental"] = incremental
+        kwargs["unreleased_version"] = unreleased
+        cmd = Changelog(config, kwargs)
+        capsys.readouterr()
+        try:
+            cmd()
+        except DryRunExit:
+            pass
+        return capsys.readouterr().out
 
     return fixture
 
@@ -572,60 +574,3 @@ def test_render_changelog_group_by_scope(render_changelog, snapshot):
 @pytest.mark.settings(release_emoji="🎉")
 def test_render_changelog_release_emoji(render_changelog, snapshot):
     assert render_changelog() == snapshot
-
-
-# def test_render_changelog_unreleased(config, gitcommits):
-#     shiny = CzShiny(config)
-#     some_commits = gitcommits[:7]
-#     tree = changelog.generate_tree_from_commits(
-#         some_commits, [], shiny.commit_parser, shiny.changelog_pattern
-#     )
-#     result = render_changelog(tree, shiny.shiny_config)
-#     assert "Unreleased" in result
-
-
-# def test_render_changelog_tag_and_unreleased(config, gitcommits, tags):
-#     shiny = CzShiny(config)
-#     some_commits = gitcommits[:7]
-#     single_tag = [
-#         tag for tag in tags if tag.rev == "56c8a8da84e42b526bcbe130bd194306f7c7e813"
-#     ]
-
-#     tree = changelog.generate_tree_from_commits(
-#         some_commits, single_tag, shiny.commit_parser, shiny.changelog_pattern
-#     )
-#     result = render_changelog(tree, shiny.shiny_config)
-
-#     assert "Unreleased" in result
-#     assert "## v1.1.1" in result
-
-
-# def test_render_changelog_with_change_type(config, gitcommits, tags):
-#     shiny = CzShiny(config)
-#     new_title = ":some-emoji: feature"
-#     change_type_map = {"feat": new_title}
-#     tree = changelog.generate_tree_from_commits(
-#         gitcommits, tags, shiny.commit_parser, shiny.changelog_pattern, change_type_map=change_type_map
-#     )
-#     result = render_changelog(tree, shiny.shiny_config)
-#     assert new_title in result
-
-
-# def test_render_changelog_with_changelog_message_builder_hook(config, gitcommits, tags):
-#     shiny = CzShiny(config)
-#     def changelog_message_builder_hook(message: dict, commit: git.GitCommit) -> dict:
-#         message[
-#             "message"
-#         ] = f"{message['message']} [link](github.com/232323232) {commit.author} {commit.author_email}"
-#         return message
-
-#     tree = changelog.generate_tree_from_commits(
-#         gitcommits,
-#         tags,
-#         shiny.commit_parser,
-#         shiny.bump_pattern,
-#         changelog_message_builder_hook=changelog_message_builder_hook,
-#     )
-#     result = changelog.render_changelog(tree)
-
-#     assert "[link](github.com/232323232) Commitizen author@cz.dev" in result

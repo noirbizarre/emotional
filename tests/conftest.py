@@ -45,10 +45,8 @@ def settings(request) -> EmotionalSettings:
 @pytest.fixture
 def config(settings):
     config = BaseConfig()
-    # config.settings.update({"name": "emotional"})
+    config.settings.update({"name": "emotional"})
     config.settings.update(settings)
-    # for marker in request.node.iter_markers("settings"):
-    #     config.settings.update(marker.kwargs)
     return config
 
 

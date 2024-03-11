@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: releases
     needs:
-      - release
+      - check
     permissions:
       actions: write
       contents: write

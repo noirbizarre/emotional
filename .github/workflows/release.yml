@@ -46,14 +46,14 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - name: Set up PDM
-        uses: pdm-project/setup-pdm@v3
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: "3.12"
           cache: true
 
       - name: Bump using commitizen
         id: commitizen
-        uses: commitizen-tools/commitizen-action@master
+        uses: commitizen-tools/commitizen-action@0.21.0
         with:
           github_token: ${{ secrets.PAT }}
           changelog_increment_filename: body.md
@@ -62,15 +62,6 @@ jobs:
           increment: ${{ github.event.inputs.increment }}
           debug: true
 
-      # Disabled until a viable alternative if found/developed
-      # - name: Wait for CI tests to succeed
-      #   uses: lewagon/wait-on-check-action@v1.3.1
-      #   with:
-      #     ref: ${{ env.REVISION }}
-      #     running-workflow-name: CI
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     wait-interval: 10
-
       - name: Build artifacts
         run: |
           sudo rm -fr .pdm-build
@@ -78,7 +69,7 @@ jobs:
 
       - name: Github Release
         id: github-release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           body_path: "body.md"
           tag_name: ${{ env.REVISION }}

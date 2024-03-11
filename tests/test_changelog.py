@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Callable
+from typing import cast
 
 import pytest
 from commitizen import git
+from commitizen.changelog import Metadata
 from commitizen.commands.changelog import Changelog
 from commitizen.exceptions import DryRunExit
 from pytest_mock import MockerFixture
@@ -521,32 +522,34 @@ def tags() -> list[git.GitTag]:
     return tags
 
 
-@pytest.fixture
-def changelog_content() -> str:
-    return (FIXTURES / "changelog.md").read_text()
+@pytest.fixture(
+    params=[
+        pytest.param(False, id="full"),
+        pytest.param(True, id="incremental"),
+    ]
+)
+def incremental(request: pytest.FixtureRequest) -> bool:
+    return cast(bool, request.param)
 
 
 @pytest.fixture
-def read_changelog() -> Callable[[str], str]:
-    def reader(name: str) -> str:
-        return (FIXTURES / f"{name}.md").read_text()
-
-    return reader
-
-
-@pytest.fixture
-def render_changelog(config, gitcommits, tags, capsys, mocker: MockerFixture):
+def render_changelog(config, gitcommits, tags, capsys, mocker: MockerFixture, incremental: bool):
     """
     Generate a changelog using the same flow as the cz changelog command.
     """
 
-    def fixture(incremental: bool = False, unreleased: bool = True, **kwargs) -> str:
-        mocker.patch("commitizen.git.get_commits", return_value=gitcommits)
+    def fixture(unreleased: bool = True, **kwargs) -> str:
+        mocker.patch(
+            "commitizen.git.get_commits", return_value=gitcommits[:4] if incremental else gitcommits
+        )
         mocker.patch("commitizen.git.get_tags", return_value=tags)
         kwargs["dry_run"] = True
         kwargs["incremental"] = incremental
         kwargs["unreleased_version"] = unreleased
         cmd = Changelog(config, kwargs)
+        mocker.patch.object(cmd.changelog_format, "get_metadata").return_value = Metadata(
+            latest_version="1.1.1"
+        )
         capsys.readouterr()
         try:
             cmd()

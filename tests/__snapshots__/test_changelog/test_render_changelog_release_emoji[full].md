@@ -139,4 +139,3 @@
 
 - **setup.py**: future is now required for every python version
 
-<!-- End of file -->

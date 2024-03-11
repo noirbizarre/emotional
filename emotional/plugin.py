@@ -218,6 +218,14 @@ class Emotional(BaseCommitizen):
                 )
         return parsed_message
 
+    def changelog_hook(self, full: str, partial: str | None) -> str:
+        """
+        Process resulting changelog to keep 1 empty line at the end of file
+        """
+        changelog = partial or full
+        changelog = changelog.rstrip() + "\n"
+        return changelog
+
     @property
     def change_type_order(self) -> list[CommitType]:
         return [

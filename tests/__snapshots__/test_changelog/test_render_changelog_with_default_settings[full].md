@@ -13,9 +13,9 @@
 
 ### 🚨 Breaking changes
 
-- **commit**: moved most of the commit logic to the commit command
 - changed stdout statements
 - I broke something
+- **commit**: moved most of the commit logic to the commit command
 
 ### 🐛 Bug fixes
 
@@ -31,12 +31,12 @@
 
 ### 💫 New features
 
-- **config**: new set key, used to set version to cfg
-- **config**: can group by scope
 - new working bump command
 - create version tag
 - update given files with new version
+- **config**: new set key, used to set version to cfg
 - support for pyproject.toml
+- **config**: can group by scope
 - first semantic version bump implementation
 
 ### 🐛 Bug fixes
@@ -139,4 +139,3 @@
 
 - **setup.py**: future is now required for every python version
 
-<!-- End of file -->

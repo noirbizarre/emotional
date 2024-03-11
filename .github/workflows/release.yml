@@ -15,10 +15,22 @@ on:
         required: false
 
 jobs:
+  check:
+    name: Check pre-conditions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure CI success
+        uses: noirbizarre/need-checks@0.1
+        with:
+          workflow: ci.yml
+          token: ${{ secrets.PAT }}
+
   release:
     name: Bump version and create changelog with commitizen
     runs-on: ubuntu-latest
     environment: releases
+    needs:
+      - release
     permissions:
       actions: write
       contents: write

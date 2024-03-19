@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import re
+
 from typing import Any, TypedDict, cast
 
 import pytest
+
 from commitizen.commands.check import Check
 from commitizen.cz.exceptions import AnswerRequiredError
 

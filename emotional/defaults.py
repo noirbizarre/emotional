@@ -44,14 +44,18 @@ TYPES: list[dict] = [
     ),
     dict(
         type="build",
-        description="Changes that affect the build system or external dependencies (ex: pip, docker, npm)",
+        description=(
+            "Changes that affect the build system or external dependencies (ex: pip, docker, npm)"
+        ),
         heading="Build",
         emoji="📦",
         aliases=["deps"],
     ),
     dict(
         type="style",
-        description="Changes that do not affect the meaning of the code (white-space, formatting, …)",
+        description=(
+            "Changes that do not affect the meaning of the code (white-space, formatting, …)"
+        ),
         heading="Style",
         emoji="🎨",
         changelog=False,
@@ -67,7 +71,7 @@ TYPES: list[dict] = [
     dict(
         type="ci",
         description="Changes to CI configuration files and scripts",
-        heading="Continous Integration",
+        heading="Continuous Integration",
         emoji="🛸",
         changelog=False,
     ),

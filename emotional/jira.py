@@ -3,6 +3,7 @@ See:
     - https://support.atlassian.com/jira-software-cloud/docs/process-issues-with-smart-commits/
     - https://confluence.atlassian.com/fisheye/using-smart-commits-960155400.html
 """
+
 from __future__ import annotations
 
 import re

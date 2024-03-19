@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import sys
+
 from dataclasses import dataclass, field, fields
 from functools import cached_property, total_ordering
 from typing import Literal
@@ -37,10 +38,10 @@ class CommitType:
     """Some known alternative keys (for legacy, typos...)"""
 
     changelog: bool = True
-    """Wether this type should appear in the changelog or not"""
+    """Whether this type should appear in the changelog or not"""
 
     question: bool = True
-    """Wether this type should appear in the question choices"""
+    """Whether this type should appear in the question choices"""
 
     bump: Increment | None = None
 
@@ -88,7 +89,7 @@ class EmotionalSettings(Settings):
     """The list of accepted types"""
 
     extra_types: list[dict] | None
-    """A list of additional types (permit addition without loosing defaults)"""
+    """A list of additional types (permit addition without losing defaults)"""
 
     github: str | None
 

@@ -6,7 +6,7 @@
 
 ### 🐛 Bug fixes
 
-- **breaking-changes**: Breaking changes are now visibles
+- **breaking-changes**: Breaking changes are now visible
 - **changelog**: ensure consistent changelog end of file without a marker
 
 ## 🚀 0.4.1 (2023-12-08)

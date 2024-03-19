@@ -3,6 +3,7 @@ See:
     - https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
     - https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/autolinked-references-and-urls#issues-and-pull-requests
 """  # noqa: E501
+
 from __future__ import annotations
 
 import re

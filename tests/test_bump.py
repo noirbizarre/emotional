@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+
 from commitizen import bump
 from commitizen.git import GitCommit
 

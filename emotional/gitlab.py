@@ -3,6 +3,7 @@ See:
     - https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically
     - https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
 """
+
 from __future__ import annotations
 
 import re

@@ -4,7 +4,7 @@ description = "A Commitizen plugin for conventional commit with emojis and integ
 authors = [
     {name = "Axel H.", email = "noirbizarre@gmail.com"},
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.8.1"
 dependencies = [
     "commitizen>=3.18.1",
     "typing-extensions>=4.4.0; python_version<'3.10'",
@@ -36,13 +36,13 @@ test = [
     "pytest>=7.1.2",
     "pytest-sugar>=0.9.5",
     "pytest-cov>=3.0.0",
-    "syrupy>=3.0.6",
+    "syrupy>=4.0",
     "pytest-mock>=3.12.0",
 ]
 lint = [
-    "mypy==1.3.0",
-    "black==23.3.0",
-    "ruff==0.0.272",
+    "codespell>=2.2.6",
+    "mypy>=1.7.0",
+    "ruff>=0.3.0",
 ]
 
 
@@ -52,6 +52,17 @@ test.cmd = "pytest"
 
 lint.help = "Lint all tracked files using pre-commit"
 lint.cmd = "pre-commit run --all-files"
+
+format.help = "Format the code according to known rules"
+format.composite = [
+    "codespell --write-changes --interactive 2",
+    # See: https://docs.astral.sh/ruff/formatter/#sorting-imports
+    "ruff check --select I --fix-only --show-fixes emotional tests",
+    "ruff format emotional tests"
+]
+
+typing.help = "Full typing linting (includes imported packages and uncommmited files)"
+typing.cmd = "mypy extensions tests --warn-unused-ignores"
 
 cover.help = "Run the test suite with coverage"
 pre_cover = "coverage erase"
@@ -83,7 +94,8 @@ changelog.help = "Generate/update the changelog"
 changelog.cmd = "cz changelog --incremental"
 
 bump.help = "Bump the version using commitizen"
-bump.cmd = "cz bump --changelog"
+bump.cmd = "cz bump --changelog --check-consistency"
+
 
 [tool.commitizen]
 name = "emotional"
@@ -92,14 +104,9 @@ version_provider = "scm"
 order_by_scope = true
 major_version_zero = true  # Remove this line for the first 1.x release
 
-[tool.pdm.vscode]
-linters = ["ruff"]
-formatter = "black"
-tests = "pytest"
 
-
-[tool.black]
-line-length = 100
+[tool.codespell]
+ignore-words=".codespellignore"
 
 
 [tool.pytest.ini_options]
@@ -130,9 +137,11 @@ ignore_errors = true
 
 
 [tool.ruff]
-line-length = 110
-fix = true
+line-length = 100
 respect-gitignore = true
+src = [".", "tests"]
+
+[tool.ruff.lint]
 select = [
     # Pyflakes
     "F",
@@ -146,10 +155,10 @@ select = [
     # isort
     "I001"
 ]
-src = [".", "tests"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-third-party = ["commitizen", "pytest"]
+lines-between-types = 1
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "emotional/defaults.py" = ["C408"]

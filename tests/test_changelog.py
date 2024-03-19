@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import cast
 
 import pytest
+
 from commitizen import git
 from commitizen.changelog import Metadata
 from commitizen.commands.changelog import Changelog
@@ -328,7 +329,7 @@ COMMITS_DATA = [
     },
     {
         "rev": "0326652b2657083929507ee66d4d1a0899e861ba",
-        "title": "fix(config): load config reads in order without failing if there is no commitizen section",
+        "title": "fix(config): load config reads in order without failing if there is no commitizen section",  # noqa: E501
         "body": "Closes #8",
         "author": "Commitizen",
         "author_email": "author@cz.dev",
@@ -468,7 +469,7 @@ COMMITS_DATA = [
     },
     {
         "rev": "ddc855a637b7879108308b8dbd85a0fd27c7e0e7",
-        "title": "refactor: renamed conventional_changelog to conventional_commits, not backward compatible",
+        "title": "refactor: renamed conventional_changelog to conventional_commits, not backward compatible",  # noqa: E501
         "body": "",
         "author": "Commitizen",
         "author_email": "author@cz.dev",

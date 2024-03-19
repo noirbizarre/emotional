@@ -8,4 +8,3 @@
 
 - how to create custom bumps
 - added bump gif
-

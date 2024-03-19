@@ -18,7 +18,6 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
-        exclude: "tests/__snapshots__/.+"
       - id: check-yaml
       - id: check-added-large-files
       - id: debug-statements

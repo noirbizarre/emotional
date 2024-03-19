@@ -224,8 +224,7 @@ class Emotional(BaseCommitizen):
         Process resulting changelog to keep 1 empty line at the end of file
         """
         changelog = partial or full
-        changelog = changelog.rstrip() + "\n"
-        return changelog
+        return changelog.rstrip()
 
     @property
     def change_type_order(self) -> list[CommitType]:

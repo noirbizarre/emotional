@@ -1,3 +1,14 @@
+## 🚀 0.5.1 (2024-03-26)
+
+### 🐛 Bug fixes
+
+- **changelog**: generated changelog pass `pre-commit` `end-of-file-fixer` by default
+
+### 📦 Build
+
+- update the stack
+
+
 ## 🚀 0.5.0 (2024-03-11)
 
 ### 🚨 Breaking changes

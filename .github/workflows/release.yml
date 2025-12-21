@@ -7,7 +7,7 @@ on:
         type: choice
         description: Kind of increment (optional)
         options:
-          - ''
+          - '-'
           - MAJOR
           - MINOR
           - PATCH
@@ -59,7 +59,7 @@ jobs:
           changelog_increment_filename: body.md
           git_redirect_stderr: true
           extra_requirements: .
-          increment: ${{ github.event.inputs.increment }}
+          increment: ${{ github.event.inputs.increment != '-' && github.event.inputs.increment || '' }}
           debug: true
 
       - name: Build artifacts

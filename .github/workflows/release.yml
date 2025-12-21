@@ -51,6 +51,9 @@ jobs:
           python-version: "3.12"
           cache: true
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
       - name: Bump using commitizen
         id: commitizen
         uses: commitizen-tools/commitizen-action@0.21.0

@@ -31,7 +31,7 @@ jobs:
         run: pdm run cover -v --force-sugar --color=yes
 
       - name: Upload coverage report to Codecov
-        uses: paambaati/codeclimate-action@v6.0.0
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: f198cfa292b0eb868dfa4f6e998b5a2fe22aa24acd16d72ca2bdbafde16b66b8
         with:

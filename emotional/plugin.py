@@ -3,9 +3,11 @@ from __future__ import annotations
 import itertools
 
 from collections import OrderedDict
-from typing import Any, Iterable
+from collections.abc import Iterable
+from typing import Any
 
-from commitizen.cz.base import BaseCommitizen, BaseConfig
+from commitizen.config.base_config import BaseConfig
+from commitizen.cz.base import BaseCommitizen
 from commitizen.cz.utils import multiple_line_breaker, required_validator
 from commitizen.git import GitCommit
 from jinja2 import PackageLoader
@@ -99,9 +101,9 @@ class Emotional(BaseCommitizen):
     @property
     def bump_map_major_version_zero(self) -> dict[str, Increment]:
         return OrderedDict(
-            (pattern, increment.replace("MAJOR", "MINOR"))
+            (pattern, increment.replace("MAJOR", "MINOR"))  # type:ignore[misc]
             for pattern, increment in self.bump_map.items()
-        )
+        )  # ty:ignore[invalid-return-type]
 
     def questions(self) -> list:
         questions: list[dict[str, Any]] = [

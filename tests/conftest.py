@@ -22,7 +22,7 @@ class Factory:
     def parsed_message(self, **kwargs) -> tuple[dict, GitCommit]:
         parsed = {"type": "chore", "scope": None, "message": "I am a message", **kwargs}
         prefix = parsed["type"]
-        msg = [f'{prefix}: {parsed["message"]}']
+        msg = [f"{prefix}: {parsed['message']}"]
         body = parsed.get("body")
         if body is not None:
             msg.extend(("", body))

@@ -11,7 +11,7 @@ from commitizen.cz.exceptions import AnswerRequiredError
 
 from emotional.plugin import Emotional, parse_scope, parse_subject
 
-valid_scopes = ["", "simple", "dash-separated", "camelCase" "UPPERCASE"]
+valid_scopes = ["", "simple", "dash-separated", "camelCase", "UPPERCASE"]
 
 scopes_transformations = [["with spaces", "with-spaces"], [None, ""]]
 
@@ -116,7 +116,7 @@ def test_long_answer(config):
     }
     message = emotional.message(answers)
     assert message == (
-        "fix(users): email pattern corrected\n" "\n" "complete content\n" "\n" "closes #24"  # noqa
+        "fix(users): email pattern corrected\n\ncomplete content\n\ncloses #24"  # noqa
     )
 
 
@@ -154,9 +154,7 @@ def test_exclamation_mark_breaking_change(config):
         "footer": "Fixes #42",
     }
     message = emotional.message(answers)
-    assert message == (
-        "fix(users)!: email pattern corrected\n" "\n" "complete content\n" "\n" "Fixes #42"
-    )
+    assert message == ("fix(users)!: email pattern corrected\n\ncomplete content\n\nFixes #42")
 
 
 def test_exclamation_mark_breaking_change_without_scope(config):
@@ -171,7 +169,7 @@ def test_exclamation_mark_breaking_change_without_scope(config):
         "footer": "Fixes #42",
     }
     message = emotional.message(answers)
-    assert message == ("fix!: email pattern corrected\n" "\n" "complete content\n" "\n" "Fixes #42")
+    assert message == ("fix!: email pattern corrected\n\ncomplete content\n\nFixes #42")
 
 
 @pytest.mark.parametrize(
@@ -185,7 +183,8 @@ def test_exclamation_mark_breaking_change_without_scope(config):
 def test_validate_bump_commit(config, message: str):
     emotional = Emotional(config)
     check = Check(config, {"message": message})
-    check.validate_commit_message(message, emotional.schema_pattern())
+    pattern = re.compile(emotional.schema_pattern())
+    check._validate_commit_message(message, pattern, "")
 
 
 class ParsedCommit(TypedDict):

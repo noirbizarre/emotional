@@ -1,4 +1,11 @@
+from commitizen.factory import committer_factory
+
 from emotional.plugin import Emotional
+
+
+def test_registered(config):
+    committer = committer_factory(config)
+    assert isinstance(committer, Emotional)
 
 
 def test_example(config):

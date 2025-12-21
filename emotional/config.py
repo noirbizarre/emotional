@@ -5,13 +5,12 @@ import sys
 
 from dataclasses import dataclass, field, fields
 from functools import cached_property, total_ordering
-from typing import Literal
+from typing import Literal, TypeAlias
 
 from commitizen.config import read_cfg
 from commitizen.defaults import Settings
 
 from . import defaults
-from ._compat import TypeAlias  # type: ignore [attr-defined]
 
 RE_HTTP = re.compile(r"(?P<server>https?://.+)/(?P<repository>[^/]+/[^/]+/?)")
 

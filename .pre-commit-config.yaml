@@ -26,7 +26,7 @@ repos:
       - id: check-merge-conflict
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.20.0
+    rev: v4.10.0
     hooks:
       - id: commitizen
         additional_dependencies:
@@ -34,7 +34,7 @@ repos:
       - id: commitizen-branch
         stages:
           - post-commit
-          - push
+          - pre-push
         additional_dependencies:
           - .
 
@@ -45,23 +45,23 @@ repos:
       - id: check-dependabot
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.3.3
+    rev: v0.14.10
     hooks:
       - id: ruff
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.9.0
+    rev: v1.19.1
     hooks:
       - id: mypy
         exclude: (docs|tests/data|template)/.*\.pyi?$
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.4.1
     hooks:
     - id: codespell
-      additional_dependencies: [tomli]
+      additional_dependencies: [tomli==2.3.0]
       args: ["--write-changes"]
       # Ignore typos in changelog, they will be overriden
       exclude: ^CHANGELOG\.md$

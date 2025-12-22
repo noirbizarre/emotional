@@ -83,7 +83,7 @@ cover.composite = [
     --cov-report=html:reports/coverage
     --cov-report=xml:reports/coverage.xml
     --no-cov-on-fail
-    --junitxml=reports/tests.xml
+    --junitxml=reports/junit.xml
   """
 ]
 pre_cover = "coverage erase"

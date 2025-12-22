@@ -16,7 +16,7 @@ FIXTURES = Path(__file__).parent / "fixtures/changelogs"
 
 
 class MarkdownSnapshotExtension(SingleFileSnapshotExtension):
-    _file_extension = "md"
+    file_extension = "md"
     _write_mode = WriteMode.TEXT
 
 

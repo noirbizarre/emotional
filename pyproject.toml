@@ -45,7 +45,7 @@ test = [
     "pytest>=9.0",
     "pytest-sugar>=0.9.5",
     "pytest-cov>=3.0.0",
-    "syrupy>=4.0",
+    "syrupy>=5.0",
     "pytest-mock>=3.12.0",
 ]
 lint = [
@@ -75,7 +75,6 @@ typing.help = "Full typing linting (includes imported packages and uncommmited f
 typing.cmd = "mypy extensions tests --warn-unused-ignores"
 
 cover.help = "Run the test suite with coverage"
-pre_cover = "coverage erase"
 cover.composite = [
   """
   test
@@ -87,9 +86,9 @@ cover.composite = [
     --junitxml=reports/tests.xml
   """
 ]
+pre_cover = "coverage erase"
 
 "cover:all".help = "Run the test suite against all supported Python version"
-"pre_cover:all" = "coverage erase"
 "cover:all".cmd = "tox --parallel"
 
 check.help = "Check everything"
@@ -138,6 +137,13 @@ source = ["emotional"]
 branch = true
 omit = [
   "tests/*",
+]
+relative_files = true
+
+[tool.coverage.paths]
+source = [
+    "emotional/",
+    ".tox/*/lib/*/site-packages/emotional/",
 ]
 
 [tool.coverage.report]

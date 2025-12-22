@@ -36,3 +36,10 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           directory: reports
+
+      - name: Upload test results to Codecov
+        uses: codecov/codecov-action@v5
+        if: ${{ !cancelled() }}
+        with:
+          directory: reports
+          report_type: test_results

@@ -1,3 +1,14 @@
+## 🚀 0.6.0 (2025-12-28)
+
+### 🚨 Breaking changes
+
+- update the stack and target `commitizen>=4.0`
+
+### 📖 Documentation
+
+- **readme**: update the badges to use codecov
+
+
 ## 🚀 0.5.1 (2024-03-26)
 
 ### 🐛 Bug fixes

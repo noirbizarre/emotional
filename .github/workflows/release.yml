@@ -56,7 +56,7 @@ jobs:
 
       - name: Bump using commitizen
         id: commitizen
-        uses: commitizen-tools/commitizen-action@0.21.0
+        uses: commitizen-tools/commitizen-action@0.26.0
         with:
           github_token: ${{ secrets.PAT }}
           changelog_increment_filename: body.md

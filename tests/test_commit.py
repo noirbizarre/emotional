@@ -184,7 +184,14 @@ def test_validate_bump_commit(config, message: str):
     emotional = Emotional(config)
     check = Check(config, {"message": message})
     pattern = re.compile(emotional.schema_pattern())
-    check._validate_commit_message(message, pattern, "")
+    assert emotional.validate_commit_message(
+        commit_msg=message,
+        pattern=pattern,
+        allow_abort=check.allow_abort,
+        allowed_prefixes=check.allowed_prefixes,
+        max_msg_length=check.max_msg_length,
+        commit_hash="",
+    ).is_valid
 
 
 class ParsedCommit(TypedDict):

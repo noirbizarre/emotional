@@ -80,7 +80,6 @@ TYPES: list[dict] = [
         description="A changeset neither fixing a bug nor adding a feature",
         heading="Refactorings",
         emoji="🔧",
-        changelog=False,
         bump="PATCH",
     ),
     dict(
@@ -103,7 +102,6 @@ TYPES: list[dict] = [
         description="Revert one or more commits",
         heading="Reverted",
         emoji="🔙",
-        changelog=False,
         key="e",
     ),
     dict(

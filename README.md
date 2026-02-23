@@ -1,7 +1,6 @@
 # emotional
 
 [![CI](https://github.com/noirbizarre/emotional/actions/workflows/ci.yml/badge.svg)](https://github.com/noirbizarre/emotional/actions/workflows/ci.yml)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/noirbizarre/emotional/main.svg)](https://results.pre-commit.ci/latest/github/noirbizarre/emotional/main)
 [![codecov](https://codecov.io/gh/noirbizarre/emotional/graph/badge.svg?token=Iha48GODCy)](https://codecov.io/gh/noirbizarre/emotional)
 
 A [Commitizen][commitizen] template for [conventional commit][conventional-commit] with emojis and integrations.

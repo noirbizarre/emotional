@@ -27,6 +27,12 @@
 - **README**: updated documentation url
 - mkdocs documentation
 
+### 🔧 Refactorings
+
+- **schema**: command logic removed from commitizen base
+- **info**: command logic removed from commitizen base
+- **example**: command logic removed from commitizen base
+
 ## 🚀 v1.1.0 (2019-04-14)
 
 ### 💫 New features
@@ -50,6 +56,10 @@
 - **README**: ensure type aliases works
 - added new changelog
 
+### 🔧 Refactorings
+
+- added commands folder, better integration with decli
+
 ## 🚀 v1.0.0 (2019-03-01)
 
 ### 🚨 Breaking changes
@@ -60,6 +70,10 @@
 
 - **README**: new badges
 - updated test command
+
+### 🔧 Refactorings
+
+- removed delegator, added decli and many tests
 
 ## 🚀 1.0.0b2 (2019-01-18)
 
@@ -109,6 +123,10 @@
 
 - **manifest**: included missing files
 
+### 🔧 Refactorings
+
+- **conventionalCommit**: moved filters to questions instead of message
+
 ## 🚀 v0.9.5 (2018-08-24)
 
 ### 🐛 Bug fixes
@@ -132,6 +150,10 @@
 - **README**: motivation
 
 ## 🚀 v0.9.2 (2017-11-11)
+
+### 🔧 Refactorings
+
+- renamed conventional_changelog to conventional_commits, not backward compatible
 
 ## 🚀 v0.9.1 (2017-11-11)
 

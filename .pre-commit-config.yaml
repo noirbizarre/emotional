@@ -26,16 +26,22 @@ repos:
       - id: detect-private-key
       - id: check-merge-conflict
 
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.8
+  - repo: local
     hooks:
       - id: commitizen
-        additional_dependencies: ["."]
+        name: commitizen check
+        entry: cz check
+        args: [--allow-abort, --commit-msg-file]
+        stages: [commit-msg]
+        language: python
       - id: commitizen-branch
-        stages:
-          - post-commit
-          - pre-push
-        additional_dependencies: ["."]
+        name: commitizen check branch
+        entry: cz check
+        args: [--rev-range, origin/HEAD..HEAD]
+        always_run: true
+        pass_filenames: false
+        language: python
+        stages: [post-commit, pre-push]
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.36.2

@@ -1,3 +1,19 @@
+## 🚀 0.6.1 (2026-02-23)
+
+### 🐛 Bug fixes
+
+- update to support v4.11+
+
+### 📦 Build
+
+- **deps**: update all dependencies (closes [#15](https://github.com/noirbizarre/emotional/issues/15))
+- add classifiers
+
+### 🧹 Chores
+
+- **defaults**: show refactorings and reverts in the changelog
+
+
 ## 🚀 0.6.0 (2025-12-28)
 
 ### 🚨 Breaking changes
